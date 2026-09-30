@@ -1,0 +1,2452 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>IAgri — Guide IA Agricole</title><meta name="description" content="Identifiez en 3 étapes les outils d'intelligence artificielle adaptés à votre exploitation agricole — par Agridées."></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;1,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+
+<style>
+/* ── TOKENS — charte Agridées : blanc + bleu ─────────── */
+:root {
+  --ink:        #1A1D24;  /* quasi-noir légèrement bleuté */
+  --brand:      #1D6FC4;  /* bleu Agridées */
+  --blue-dk:    #155AA0;  /* hover, liens actifs */
+  --blue-lt:    #E8F2FB;  /* fond bleu très clair */
+  --amber:      #D46B00;  /* accent secondaire chaud */
+  --amber-lt:   #FDF2E0;
+  --ground:     #F5F7FA;  /* fond blanc-bleuté */
+  --surface:    #FFFFFF;
+  --muted:      #6B7585;
+  --border:     #C8D8EA;
+  --sage:       #DCE9F5;  /* bleu très pâle pour hover */
+  --header-bg:  #FFFFFF;
+  --hero-bg:    #EBF3FC;
+
+  /* category tokens — gardés distincts pour lisibilité */
+  --cogn:       #2A7EA4;  --cogn-bg:  #E2F2FB;
+  --dec:        #B05000;  --dec-bg:   #FBF0DC;
+  --eco:        #2E7D4A;  --eco-bg:   #E2F4EA;
+  --strat:      #5040A0;  --strat-bg: #EDEAFB;
+  --assist:     #1A7A9A;  --assist-bg: #E0F5FA;
+
+  --llm:        #6B5AA8;  --llm-bg:   #EEEBFA;
+  --logo-grey: #6E7A88;
+
+  --r: 8px;
+  --sh: 0 1px 3px rgba(26,29,36,.08);
+  --sh-md: 0 4px 18px rgba(26,29,36,.12);
+
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --disp: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+}
+/* La page s'affiche toujours dans la charte Agridees, quel que soit le
+   reglage clair/sombre du systeme du visiteur. */
+:root { color-scheme: light !important; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--ground);
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.site-header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.header-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* Logo SVG officiel Agridées */
+.logo-svg {
+  height: 36px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+.logo-pipe {
+  width: 1px; height: 22px;
+  background: var(--border);
+}
+.header-tag {
+  font-size: .72rem;
+  color: var(--muted);
+  letter-spacing: .04em;
+  font-weight: 600;
+}
+.logo-platform {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 1.45rem;
+  letter-spacing: -.02em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.lp-ia  { color: var(--brand); }
+.lp-gri { color: var(--logo-grey); }
+.logo-agridees {
+  display: flex;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: opacity .15s;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.logo-agridees:hover { opacity: .72; }
+.logo-agridees:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+.logo-agridees .logo-svg { height: 30px; }
+.logo-by {
+  font-size: .8rem;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+/* Assist category */
+.b-assist { background: var(--assist-bg); color: var(--assist); }
+.t-assist  { background: var(--assist-bg); color: var(--assist); border-color: var(--assist-bg); }
+.cs-assist { border-color: var(--assist); }
+.cs-assist .cat-stripe { background: var(--assist); }
+.need-card.cat-assist { border-top-color: var(--assist); }
+.need-card.cat-assist .need-radio { border-color: var(--assist); }
+.need-card.cat-assist.sel { background: var(--assist-bg); border-top-color: var(--assist); }
+.need-card.cat-assist.sel .need-radio { background: var(--assist); border-color: var(--assist); }
+.need-card.cat-assist.sel .need-radio::after { content: ''; display: block; width: 8px; height: 8px; border-radius: 50%; background: #fff; margin: auto; }
+/* Club IAgri tab panel */
+.club-hero {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--blue-dk) 100%);
+  color: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: var(--r);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.club-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+}
+.club-hero-eyebrow {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .75;
+  margin-bottom: .5rem;
+  display: block;
+}
+.club-hero h2 {
+  font-family: var(--disp);
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: .75rem;
+}
+.club-hero-tagline {
+  font-size: 1.05rem;
+  opacity: .85;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.club-hero-desc {
+  font-size: .95rem;
+  opacity: .8;
+  line-height: 1.65;
+  max-width: 660px;
+}
+.club-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.club-action-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--sh);
+}
+.club-action-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--blue-lt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--brand);
+}
+.club-action-title {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--ink);
+  margin-bottom: .4rem;
+}
+.club-action-freq {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: .5rem;
+  display: block;
+}
+.club-action-desc {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.club-objectives {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--sh);
+}
+.club-objectives h3 {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.club-obj-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.club-obj-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  font-size: .9rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.club-obj-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  margin-top: .35em;
+  flex-shrink: 0;
+}
+.club-visual {
+  margin: 2rem 0 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--sh);
+  background: var(--surface);
+}
+.club-visual svg { display: block; width: 100%; height: auto; }
+.club-visual-cap {
+  font-size: .82rem;
+  color: var(--muted);
+  padding: .7rem 1.15rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+.club-cta {
+  background: var(--blue-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.club-cta-text strong { color: var(--ink); font-size: 1rem; display: block; }
+.club-cta-mail {
+  display: inline-block;
+  margin-top: .2rem;
+  font-size: .82rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.club-cta-mail:hover { color: var(--brand); text-decoration: underline; }
+.club-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--brand);
+  color: #fff;
+  padding: .6rem 1.2rem;
+  border-radius: 6px;
+  font-size: .88rem;
+  font-weight: 600;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.club-cta-link:hover { background: var(--blue-dk); }
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  background: var(--hero-bg);
+  padding: 2.75rem 2rem 3.25rem;
+  border-bottom: 2px solid var(--brand);
+}
+.hero-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.hero-text { flex: 1; min-width: 280px; }
+.hero h1 {
+  font-family: var(--disp);
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: balance;
+  margin-bottom: .75rem;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--brand);
+}
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 500px;
+  line-height: 1.65;
+}
+.hero-stat {
+  flex-shrink: 0;
+  background: var(--brand);
+  border: none;
+  border-radius: var(--r);
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: var(--disp);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.8);
+  margin-top: 3px;
+}
+
+/* ── MAIN ────────────────────────────────────────────── */
+.main {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+}
+
+/* ── WIZARD PROGRESS ─────────────────────────────────── */
+.wiz-bar {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--sh);
+}
+.wiz-step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: .9rem 1.25rem;
+  border-right: 1px solid var(--border);
+  cursor: default;
+  transition: background .2s;
+}
+.wiz-step:last-child { border-right: none; }
+.wiz-step.done { cursor: pointer; }
+.wiz-step.done:hover { background: var(--sage); }
+.wiz-step.active { background: var(--blue-lt); }
+
+.wiz-num {
+  font-family: var(--disp);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--muted);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+}
+.wiz-step.active .wiz-num { color: var(--blue-dk); }
+.wiz-step.done .wiz-num { color: var(--brand); }
+
+.wiz-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.wiz-eyebrow {
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wiz-label {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wiz-step.active .wiz-label { color: var(--brand); }
+.wiz-value {
+  font-size: .75rem;
+  color: var(--blue-dk);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wiz-tick {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--brand);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.wiz-tick svg { width: 11px; height: 11px; }
+.wiz-step.done .wiz-tick { display: flex; }
+
+/* ── SECTIONS ────────────────────────────────────────── */
+.wiz-section { display: none; }
+.wiz-section.visible { display: block; }
+
+.sec-head { margin-bottom: 1.75rem; }
+.sec-head h2 {
+  font-family: var(--disp);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: .35rem;
+  text-wrap: balance;
+}
+.sec-head p {
+  color: var(--muted);
+  font-size: .93rem;
+}
+
+/* ── PRODUCTION GRID ─────────────────────────────────── */
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: .875rem;
+}
+.prod-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--r);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  transition: border-color .18s, box-shadow .18s, transform .15s;
+  text-align: left;
+  box-shadow: var(--sh);
+  min-width: 0;
+}
+.prod-card:hover {
+  border-color: var(--blue-dk);
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px);
+}
+.prod-card.sel {
+  border-color: var(--brand);
+  background: var(--blue-lt);
+}
+.prod-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background: var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .18s;
+  flex-shrink: 0;
+}
+.prod-card.sel .prod-icon { background: var(--brand); }
+.prod-icon svg { width: 28px; height: 28px; }
+.prod-name {
+  font-weight: 700;
+  font-size: .98rem;
+  color: var(--ink);
+  line-height: 1.3;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.prod-sub { font-size: .78rem; color: var(--muted); line-height: 1.4; }
+
+/* ── NEEDS GRID ──────────────────────────────────────── */
+.needs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: .875rem;
+  margin-bottom: 1.75rem;
+}
+.need-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.35rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  transition: border-color .18s, box-shadow .18s;
+  box-shadow: var(--sh);
+}
+.need-card { text-align: left; }
+.need-card:hover { border-color: var(--blue-dk); box-shadow: var(--sh-md); }
+.need-card.sel { border-color: var(--brand); background: var(--blue-lt); }
+
+.cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.b-cogn  { background: var(--cogn-bg);  color: var(--cogn); }
+.b-dec   { background: var(--dec-bg);   color: var(--dec); }
+.b-eco   { background: var(--eco-bg);   color: var(--eco); }
+.b-strat { background: var(--strat-bg); color: var(--strat); }
+.b-llm   { background: var(--llm-bg);   color: var(--llm); }
+
+.need-name { font-weight: 700; font-size: 1rem; color: var(--ink); text-wrap: balance; }
+.need-desc { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+
+.need-radio {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .18s;
+  flex-shrink: 0;
+}
+.need-card.sel .need-radio {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+.need-radio::after {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.need-card.sel .need-radio::after { opacity: 1; }
+
+/* ── ACTIONS ─────────────────────────────────────────── */
+.step-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand);
+  color: #fff;
+  font-family: var(--body);
+  font-size: .97rem;
+  font-weight: 700;
+  padding: .7rem 1.6rem;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background .18s, transform .12s;
+  letter-spacing: .01em;
+}
+.btn-main:hover { background: var(--blue-dk); transform: translateY(-1px); }
+.btn-main:disabled {
+  background: var(--border);
+  color: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--brand);
+  font-family: var(--body);
+  font-size: .88rem;
+  font-weight: 600;
+  padding: .6rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: background .18s;
+}
+.btn-ghost:hover { background: var(--sage); }
+
+/* ── RESULTS ─────────────────────────────────────────── */
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.results-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.rm-item { display: flex; flex-direction: column; gap: 1px; }
+.rm-label {
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rm-value {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.results-count {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.rc-num {
+  font-family: var(--disp);
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--brand);
+  line-height: 1;
+}
+.rc-label { font-size: .75rem; color: var(--muted); }
+
+/* category sections */
+.cat-section { margin-bottom: 2.75rem; }
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  padding-bottom: .875rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+.cat-stripe {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.cs-cogn  .cat-stripe { background: var(--cogn); }
+.cs-dec   .cat-stripe { background: var(--dec); }
+.cs-eco   .cat-stripe { background: var(--eco); }
+.cs-strat .cat-stripe { background: var(--strat); }
+.cs-llm   .cat-stripe { background: var(--llm); }
+.cat-intro {
+  font-size: .87rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: -.4rem 0 1.15rem;
+}
+
+.cat-header h3 {
+  font-family: var(--disp);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.cat-header .cat-badge { margin-left: 4px; }
+.cat-ct {
+  margin-left: auto;
+  font-size: .8rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* tool cards */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: .875rem;
+}
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  box-shadow: var(--sh);
+  transition: box-shadow .18s, transform .15s;
+}
+.tool-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
+
+.tc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tc-names { flex: 1; }
+.tc-name {
+  font-weight: 700;
+  font-size: .97rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.tc-company {
+  font-size: .75rem;
+  color: var(--muted);
+  margin-top: 1px;
+  text-wrap: balance;
+}
+.tc-type {
+  font-size: .64rem;
+  font-weight: 600;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.35;
+  text-align: right;
+  max-width: 45%;
+  flex-shrink: 1;
+  height: fit-content;
+}
+.tc-desc {
+  font-size: .83rem;
+  color: var(--ink);
+  line-height: 1.55;
+  flex: 1;
+}
+.tc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+.tc-tag {
+  font-size: .63rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: .03em;
+}
+.t-prod  { background: var(--blue-lt);    color: var(--brand); }
+.t-cogn  { background: var(--cogn-bg);   color: var(--cogn); }
+.t-dec   { background: var(--dec-bg);    color: var(--dec); }
+.t-eco   { background: var(--eco-bg);    color: var(--eco); }
+.t-strat { background: var(--strat-bg);  color: var(--strat); }
+
+/* empty */
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+}
+.no-results h3 {
+  font-family: var(--disp);
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin-bottom: .5rem;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.site-footer {
+  margin-top: 8rem;
+  padding-top: 2.75rem;
+  border-top: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* CTA note */
+.footer-note-cta {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--blue-lt);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.5rem;
+}
+.footer-note-icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-note-body { flex: 1; min-width: 0; }
+.footer-note-text {
+  font-size: .9rem;
+  color: var(--ink);
+  margin-bottom: .65rem;
+  line-height: 1.55;
+}
+.footer-note-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: none;
+  transition: color .15s;
+}
+.footer-note-link:hover { color: var(--blue-dk); text-decoration: underline; }
+
+/* About Agridées */
+.footer-about {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.footer-about-logo {
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity .15s;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 130px;
+}
+.footer-about-logo:hover { opacity: .72; }
+.footer-logo-wm {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  color: #2B2B2B;
+}
+.footer-logo-wm span {
+  color: #8DC63F;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.footer-logo-date {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.footer-about-text {
+  flex: 1;
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  min-width: 220px;
+}
+
+/* Source line */
+.footer-source {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.55;
+  padding-bottom: 1rem;
+}
+
+/* Tool card note (accès restreint, etc.) */
+.tc-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: .75rem;
+  color: var(--amber);
+  background: var(--amber-lt);
+  border-radius: 5px;
+  padding: .35rem .6rem;
+  margin-top: 4px;
+  line-height: 1.45;
+}
+.tc-note svg { flex-shrink: 0; margin-top: 1px; }
+
+/* Tool card link */
+.tc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color .15s;
+}
+.tc-link:hover { color: var(--blue-dk); text-decoration: underline; }
+
+
+/* ── PICTOGRAMMES ────────────────────────────────────
+   Chaque icone code une information reelle : categorie de besoin,
+   famille technologique de l outil, nature de la ressource.
+   Aucune n est purement decorative.                              */
+.ico { width: 1em; height: 1em; display: block; flex-shrink: 0; }
+
+/* Icone de categorie sur les cartes "priorites" */
+.need-head { display: flex; align-items: center; gap: .6rem; }
+.need-ico {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .18s, color .18s;
+}
+.need-ico .ico { width: 19px; height: 19px; }
+.cat-cogn  .need-ico { background: var(--cogn-bg);  color: var(--cogn); }
+.cat-dec   .need-ico { background: var(--dec-bg);   color: var(--dec); }
+.cat-eco   .need-ico { background: var(--eco-bg);   color: var(--eco); }
+.cat-strat .need-ico { background: var(--strat-bg); color: var(--strat); }
+.cat-assist .need-ico { background: var(--assist-bg); color: var(--assist); }
+
+/* Icone de categorie en tete de section de resultats */
+.cat-ico {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.cat-ico .ico { width: 20px; height: 20px; }
+.cs-cogn  .cat-ico { background: var(--cogn-bg);  color: var(--cogn); }
+.cs-dec   .cat-ico { background: var(--dec-bg);   color: var(--dec); }
+.cs-eco   .cat-ico { background: var(--eco-bg);   color: var(--eco); }
+.cs-strat .cat-ico { background: var(--strat-bg); color: var(--strat); }
+.cs-assist .cat-ico { background: var(--assist-bg); color: var(--assist); }
+.cs-llm   .cat-ico { background: var(--llm-bg);   color: var(--llm); }
+
+/* Famille technologique, dans le badge de type de chaque outil */
+.tc-type { display: inline-flex; align-items: center; gap: 5px; }
+.tc-type .ico { width: 13px; height: 13px; opacity: .8; }
+
+/* Rappel du type de production dans le bandeau de resultats */
+.rm-prod { display: flex; align-items: center; gap: .55rem; }
+.rm-prod-ico {
+  width: 32px; height: 32px; border-radius: 9px; background: var(--blue-lt);
+  color: var(--brand); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.rm-prod-ico svg { width: 19px; height: 19px; }
+
+/* Nature de la ressource, onglet S informer */
+.inform-top { display: flex; align-items: flex-start; gap: .65rem; }
+.inform-ico {
+  width: 32px; height: 32px; border-radius: 9px; background: var(--blue-lt);
+  color: var(--brand); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.inform-ico .ico { width: 18px; height: 18px; }
+.inform-top .inform-eyebrow { padding-top: 3px; }
+
+/* Motif de champ en filigrane derriere le hero */
+.hero { position: relative; overflow: hidden; }
+.hero-motif {
+  position: absolute; inset: auto 0 0 0; height: 34%;
+  pointer-events: none; opacity: .3; color: var(--brand);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 70%);
+          mask-image: linear-gradient(to bottom, transparent, #000 70%);
+}
+.hero-inner { position: relative; z-index: 1; }
+@media (max-width: 640px) { .hero-motif { display: none; } }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .wiz-bar { flex-direction: column; }
+  .wiz-step { border-right: none; border-bottom: 1px solid var(--border); }
+  .wiz-step:last-child { border-bottom: none; }
+  .hero-stat { display: none; }
+  .prod-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+  .site-footer { margin-top: 4.5rem; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .results-bar { flex-direction: column; align-items: flex-start; }
+  .results-count { align-items: flex-start; }
+  .header-tag { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ── TABS NAVIGATION ─────────────────────────────────── */
+.main-tabs {
+  display: flex;
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--border);
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.main-tabs::-webkit-scrollbar { display: none; }
+.tab-btn { flex-shrink: 0; }
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: .75rem 1.5rem;
+  font-family: var(--body);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color .18s, border-color .18s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--brand); }
+.tab-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
+.tab-panel { display: none; }
+.tab-panel.visible { display: block; }
+
+/* ── S'INFORMER — ressources ─────────────────────────── */
+.inform-intro {
+  margin-bottom: 2rem;
+}
+.inform-intro h2 {
+  font-family: var(--disp);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: .4rem;
+}
+.inform-intro p { color: var(--muted); font-size: .93rem; }
+
+.inform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: .875rem;
+  margin-bottom: 3rem;
+}
+.inform-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  box-shadow: var(--sh);
+  transition: box-shadow .18s, transform .15s;
+}
+.inform-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
+
+.inform-eyebrow {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.inform-name {
+  font-weight: 800;
+  font-size: .97rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.inform-desc {
+  font-size: .83rem;
+  color: var(--muted);
+  line-height: 1.55;
+  flex: 1;
+}
+.inform-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: none;
+  margin-top: 4px;
+  transition: color .15s;
+}
+.inform-link:hover { color: var(--blue-dk); text-decoration: underline; }
+
+/* ── POINTS DE VIGILANCE ─────────────────────────────── */
+.inform-group { margin-bottom: 2.5rem; }
+.inform-group-title {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 1.12rem;
+  color: var(--ink);
+  padding-bottom: .5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: .55rem;
+}
+.inform-group-intro {
+  font-size: .86rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 68ch;
+  margin-bottom: 1.15rem;
+}
+
+.vig-intro h2 { display: flex; align-items: center; gap: .7rem; }
+.vig-intro .vig-icon-wrap { width: 40px; height: 40px; border-radius: 10px; }
+.vig-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.75rem 2rem;
+  box-shadow: var(--sh);
+  margin-bottom: 2.5rem;
+}
+.vig-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.vig-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--amber-lt);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.vig-title h2 {
+  font-family: var(--disp);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.vig-title p {
+  font-size: .85rem;
+  color: var(--muted);
+  margin-top: .2rem;
+}
+.vig-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.vig-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: .875rem 1rem;
+  background: var(--ground);
+  border-radius: var(--r);
+  border-left: 3px solid var(--amber);
+}
+.vig-num {
+  font-family: var(--disp);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--amber);
+  flex-shrink: 0;
+  line-height: 1.2;
+  min-width: 1.4rem;
+  text-align: center;
+}
+.vig-body { flex: 1; }
+.vig-label {
+  font-weight: 700;
+  font-size: .93rem;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 2px;
+}
+.vig-detail {
+  font-size: .83rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 480px) {
+  .prod-grid { grid-template-columns: 1fr; }
+  .site-header { padding: 0 1rem; }
+  .main { padding-left: 1rem; padding-right: 1rem; }
+  .hero { padding-left: 1rem; padding-right: 1rem; }
+  .logo-agridees .logo-svg { height: 24px; }
+}
+
+@media (max-width: 640px) {
+  .tab-btn { padding: .65rem .9rem; font-size: .82rem; }
+  .vig-section { padding: 1.25rem 1rem; }
+  .inform-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ─── HEADER ──────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-platform"><span class="lp-ia">IA</span><span class="lp-gri">gri</span></span>
+    </div>
+    <a class="logo-agridees" href="https://www.agridees.com" target="_blank" rel="noopener" aria-label="Agridées — ouvrir agridees.com">
+      <span class="logo-by">par</span>
+        <svg class="logo-svg" viewBox="0 0 220.5 64.6" xmlns="http://www.w3.org/2000/svg" aria-label="Agridées">
+        <style>.lst1{fill:#003686}</style>
+        <path d="M6.6 37.4c-.2 3.7 2.6 6.9 6.3 7.1h.7c9.1 0 9.1-14.2 0-14.2-3.7-.2-6.8 2.7-6.9 6.4-.1.2-.1.5-.1.7m14.1-11.7h5.6v23.4h-5.5l-.3-3.4c-1.3 2.8-5 4.1-7.6 4.1C6 49.9.8 45.6.8 37.4c0-8.1 5.4-12.3 12.2-12.2 3.1 0 6.1 1.5 7.5 3.8l.2-3.3zm15 11.1c0 4.1 2.8 6.5 6.1 6.5s6.1-2.5 6.1-6.5-2.8-6.6-6.1-6.6c-3.4 0-6.1 2.5-6.1 6.6m13.8-13.5l4.3 3.2-2.6 3.3c1.7 1.9 2.6 4.4 2.5 6.9 0 2.9-1.1 7-4.9 8.7 3.9 1.9 4.8 4.7 4.8 7.7 0 6.5-4.9 10.4-11.7 10.4S30 59.4 30 53.1h5.7c0 3 2.8 5 6.1 5s5.9-1.8 5.9-5-3-4.7-5.9-4.7c-7.3 0-11.9-4.5-11.9-11.8S35.3 25 41.8 25c1.9-.1 3.7.4 5.4 1.3l2.3-3zm13.2 2.4l.4 2.7c1.8-2.9 4.2-3.3 6.6-3.3 2.2 0 4.4.8 6 2.2l-2.6 5c-1.1-1-2.6-1.6-4.2-1.5-3 0-5.8 1.6-5.8 5.9V49h-5.8V25.7h5.4zm99.8-10.5h-6.8l-3.5 6.5v.3h5.1l5.2-6.5v-.3zm-13.2 19.5H162c-.4-3-2.8-4.6-6.1-4.6-3.1 0-5.7 1.5-6.6 4.6m18.2 4.8h-18.3c.4 2.9 2.9 5 7 5 2.1 0 4.9-.8 6.3-2.2l3.7 3.7c-2.5 2.6-6.5 3.8-10.1 3.8-8.1 0-12.9-5-12.9-12.5 0-7.1 4.8-12.2 12.4-12.2 7.9-.1 12.8 4.7 11.9 14.4m22.1-4.8c-.4-3-2.8-4.6-6.1-4.6-3.1 0-5.7 1.5-6.5 4.6h12.6zm-12.7 4.8c.4 2.9 2.9 5 7 5 2.1 0 4.9-.8 6.3-2.2l3.7 3.7c-2.5 2.6-6.5 3.8-10.1 3.8-8.1 0-12.9-5-12.9-12.5 0-7.1 4.8-12.2 12.4-12.2 7.8 0 12.7 4.8 11.8 14.5l-18.2-.1zm38-7.6c-1.6-1.5-3.7-2.2-5.8-2.1-2.8 0-4.3.9-4.3 2.3 0 1.5 1.4 2.4 4.4 2.6 4.4.3 10 1.3 10 7.5 0 4.1-3.4 7.7-10.1 7.7-3.7 0-7.4-.6-10.8-4.2l2.8-4.1c1.7 1.8 5.5 3.2 8.1 3.3 2.2 0 4.2-1.1 4.2-2.8 0-1.6-1.3-2.3-4.7-2.5-4.4-.3-9.7-1.9-9.7-7.3s5.6-7.3 9.9-7.3c3.7 0 6.4.7 9.1 3.1l-3.1 3.8z" fill="#757474"/>
+        <path d="M105.6 40.4h10c11 0 15.3-8 15.1-15.9-.2-7.5-4.7-15-15.2-15h-10v30.9zm34.1-15.8c.2 12.2-7.3 24.6-24.2 24.6h-19V.8h19c16.6 0 24 11.8 24.2 23.8" class="lst1"/>
+        <path class="lst1" d="M79.5 25.7h5.6v23.4h-5.6z"/>
+        <path class="lst1" d="M79.5 15.4h5.6v8.6h-5.6z"/>
+        <path d="M1.8 4.3h.9c.6 0 1.6 0 1.6-1.5 0-.8-.5-1.2-1.4-1.2H1.8v2.7zM.8.8h2.5c1.1 0 2 1 2 2.1 0 .8-.5 1.5-1.2 1.8.7.1 1.2.7 1.2 1.3l.1 1.3c0 .9.2 1.1.4 1.2H4.6c-.2-.3-.3-.7-.3-1.1V6.2c-.1-1-.7-1.1-1.2-1.1H1.8v3.5h-1V.8z" class="lst1" transform="translate(78.727 55.098)"/>
+        <path d="M312.6 81.6h1.1l-1.2 1.5h-.7l.8-1.5zm-2.3 1.9h4v.9h-3.1v2.4h2.9v.8h-2.9v2.8h3.2v.8h-4.1v-7.7zm5.3 0h4v.8h-3.1v2.4h2.9v.8h-2.9v3.6h-1v-7.6zm5.1 0h1v6.9h3.1v.8h-4.1v-7.7zm7.3-1.9h1.1l-1.2 1.5h-.7l.8-1.5zm-2.3 1.9h4v.9h-3.1v2.4h2.9v.8h-2.9v2.8h3.2v.8h-4.1v-7.7z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M5.7 6.1C5.6 7.5 5 8.9 3.3 8.9 1.1 8.9.8 6.8.8 4.9s.4-4 2.5-4c1.6 0 2.2.9 2.3 2.4h-1c0-.9-.3-1.6-1.3-1.6C2 1.6 1.8 3 1.8 4.8S2 8.1 3.3 8.1c1.2 0 1.3-1.1 1.4-2h1z" class="lst1" transform="translate(105.152 54.948)"/>
+        <path d="M341.4 91.3h-1v-3.7h-2.7v3.7h-1v-7.8h1v3.2h2.7v-3.2h1v7.8zm1.5-7.7h1v7.8h-1z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M1.8 4.3h.9c.6 0 1.6 0 1.6-1.5 0-.8-.5-1.2-1.4-1.2H1.8v2.7zM.8.8h2.5c1.1 0 2 1 2 2.1 0 .8-.5 1.5-1.2 1.8.7.1 1.2.7 1.2 1.3l.1 1.3c0 .9.2 1.1.4 1.2H4.6c-.2-.3-.3-.7-.3-1.1V6.2c-.1-1-.7-1.1-1.2-1.1H1.8v3.5h-1V.8zm12.6 3.7h1.1c.7 0 1.3-.5 1.3-1.5.1-.7-.4-1.3-1-1.4h-1.4v2.9zm-1-3.7h2c1.1-.2 2.2.5 2.4 1.6V3c.1 1.1-.8 2.2-1.9 2.2h-1.5v3.3h-1V.8z" class="lst1" transform="translate(119.661 55.098)"/>
+        <path d="M363.1 88.4h2.1l-1-3.7-1.1 3.7zm.4-4.9h1.3l2.1 7.8h-1l-.6-2.1h-2.5l-.6 2.1h-1l2.3-7.8z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M1.8 4.3h.9c.6 0 1.6 0 1.6-1.5 0-.8-.5-1.2-1.4-1.2H1.8v2.7zM.8.8h2.5c1.1 0 2 1 2 2.1 0 .8-.5 1.5-1.2 1.8.7.1 1.2.7 1.2 1.3l.1 1.3c0 .9.2 1.1.4 1.2H4.6c-.2-.3-.3-.7-.3-1.1l-.1-1.2c0-1-.6-1.1-1.1-1.1H1.8v3.5h-1V.8z" class="lst1" transform="translate(141.959 55.098)"/>
+        <path d="M375.7 91.3h-1v-6.9h-1.9v-.8h4.9v.8h-2v6.9zm3.4-2.9h2.1l-1-3.7-1.1 3.7zm.5-4.9h1.3l2.1 7.8h-1l-.6-2.1H377l-.6 2.1h-1l2.3-7.8z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M4.6 3.1c0-.8-.3-1.5-1.3-1.5-1.3 0-1.5 1.5-1.5 3.2S2 8.1 3.3 8.1s1.4-1.6 1.4-2.6H3.2v-.8h2.4v4h-.7v-1c-.2.7-.9 1.2-1.7 1.2-2 0-2.4-1.9-2.4-4 0-2 .4-4 2.5-4 1.2-.1 2.2.8 2.3 2v.3l-1-.1z" class="lst1" transform="translate(157.869 54.946)"/>
+        <path d="M389.8 83.5h4v.8h-3.1v2.4h2.9v.8h-2.9v2.8h3.2v.8h-4.1v-7.6z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M1.8 4.3h.9c.6 0 1.6 0 1.6-1.5 0-.8-.5-1.2-1.4-1.2H1.8v2.7zM.8.8h2.5c1.1 0 2 1 2 2.1 0 .8-.5 1.5-1.2 1.8.7.1 1.2.7 1.1 1.3l.1 1.3c0 .9.2 1.1.4 1.2H4.6c-.2-.3-.3-.7-.3-1.1l-.1-1.2c0-1-.6-1.1-1.1-1.1H1.8v3.5h-1V.8z" class="lst1" transform="translate(169.317 55.098)"/>
+        <path d="M407.3 88.4h2.1l-1-3.7-1.1 3.7zm.4-4.9h1.3l2.1 7.8h-1l-.6-2.1H407l-.6 2.1h-1l2.3-7.8zm3.3 0h1l1.5 6.7 1.5-6.7h1l-2 7.8h-1.2l-1.8-7.8zm6.6 4.9h2.1l-1-3.7-1.1 3.7zm.4-4.9h1.3l2.1 7.8h-1l-.6-2.1h-2.5l-.6 2.1h-1l2.3-7.8zm4.2 0h1.2L426 90v-6.5h1v7.8h-1.3l-2.5-6.3v6.3h-1v-7.8z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M5.7 6.1C5.6 7.5 5 8.9 3.4 8.9 1.2 8.9.9 6.8.9 4.9s.4-4 2.5-4c1.6 0 2.2.9 2.3 2.4h-1c0-.9-.3-1.6-1.3-1.6C2 1.6 1.9 3 1.9 4.8S2 8.1 3.4 8.1c1.2 0 1.3-1.1 1.4-2h.9z" class="lst1" transform="translate(202.628 54.948)"/>
+        <path d="M434.3 83.5h4v.8h-3.1v2.4h2.9v.8h-2.9v2.8h3.2v.8h-4.1v-7.6z" class="lst1" transform="translate(-224.882 -27.638)"/>
+        <path d="M88.9 4.3h.9c.6 0 1.6 0 1.6-1.5 0-.8-.5-1.2-1.4-1.2h-1.1v2.7zm-1-3.5h2.5c1.1 0 2 1 2 2.1 0 .8-.5 1.5-1.2 1.8.6.1 1.1.6 1.1 1.3l.1 1.3c0 .9.2 1.1.4 1.2h-1.2c-.2-.3-.3-.7-.3-1.1l-.1-1.2c-.1-1.1-.7-1.1-1.2-1.1h-1.3v3.5h-1V.8zM3 4.8c0 .6-.5 1.1-1.1 1.1S.8 5.4.8 4.8c0-.6.5-1.1 1.1-1.1.6 0 1.1.5 1.1 1.1m49.3 0c0 .6-.5 1.1-1.1 1.1s-1.1-.5-1.1-1.1c0-.6.5-1.1 1.1-1.1.6 0 1.1.5 1.1 1.1" class="lst1" transform="translate(126.796 55.098)"/>
+        </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ─── HERO ────────────────────────────────────────── -->
+<div class="hero">
+  <svg class="hero-motif" viewBox="0 0 1200 130" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M0 123 C 220 84, 560 78, 1200 111"/>
+      <path d="M0 101 C 250 56, 610 50, 1200 87"/>
+      <path d="M0 77 C 290 30, 660 24, 1200 61"/>
+    </g>
+    <g fill="currentColor">
+      <circle cx="170" cy="96" r="2.8"/><circle cx="392" cy="82" r="2.8"/>
+      <circle cx="614" cy="78" r="2.8"/><circle cx="836" cy="82" r="2.8"/>
+      <circle cx="1046" cy="94" r="2.8"/>
+      <circle cx="281" cy="64" r="2.2"/><circle cx="725" cy="58" r="2.2"/>
+    </g>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Quels outils <em>IA</em><br>pour votre exploitation ?</h1>
+      <p>Identifiez en 3 étapes les solutions d'intelligence artificielle les mieux adaptées à votre profil de chef d'exploitation agricole — selon votre type de production et vos priorités terrain.</p>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="total-count">60+</div>
+      <div class="hero-stat-label">Outils IA référencés</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN ─────────────────────────────────────────── -->
+<main class="main">
+
+  <!-- TAB NAVIGATION -->
+  <div class="main-tabs" role="tablist">
+    <button class="tab-btn active" id="tab-btn-wizard" role="tab" aria-selected="true" onclick="switchTab('wizard')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12c0-2.5 1.6-4.5 4-5.3M14 12c0-2.5-1.6-4.5-4-5.3"/><circle cx="8" cy="5" r="2.5"/><path d="M1 15h14"/></svg>
+      Trouver mes outils
+    </button>
+    <button class="tab-btn" id="tab-btn-vigilance" role="tab" aria-selected="false" onclick="switchTab('vigilance')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.9 2.3 1.2 11.8A1.4 1.4 0 0 0 2.4 14h11.2a1.4 1.4 0 0 0 1.2-2.2L9.1 2.3a1.3 1.3 0 0 0-2.2 0z"/><line x1="8" y1="6.2" x2="8" y2="9"/><line x1="8" y1="11.4" x2="8.01" y2="11.4"/></svg>
+      Points de vigilance
+    </button>
+    <button class="tab-btn" id="tab-btn-inform" role="tab" aria-selected="false" onclick="switchTab('inform')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5.5" x2="8" y2="5.6"/><line x1="8" y1="8" x2="8" y2="11.5"/></svg>
+      S'informer
+    </button>
+    <button class="tab-btn" id="tab-btn-club" role="tab" aria-selected="false" onclick="switchTab('club')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 10c0 2.5-2.7 4.5-6 4.5S2 12.5 2 10c0-2.5 2.7-4.5 6-4.5S14 7.5 14 10z"/><path d="M5 5.5C5 3.6 6.3 2 8 2s3 1.6 3 3.5"/><path d="M6.5 10.5 L7.5 12 L9.5 8.5"/></svg>
+      Club IAgri
+    </button>
+  </div>
+
+  <!-- TAB: TROUVER MES OUTILS -->
+  <div id="tab-wizard" class="tab-panel visible" role="tabpanel" aria-labelledby="tab-btn-wizard">
+
+  <!-- PROGRESS BAR -->
+  <div class="wiz-bar" role="navigation" aria-label="Étapes">
+    <div class="wiz-step active" id="bar-1" onclick="goStep(1)">
+      <span class="wiz-num">01</span>
+      <div class="wiz-info">
+        <span class="wiz-eyebrow">Étape 1</span>
+        <span class="wiz-label">Votre exploitation</span>
+        <span class="wiz-value" id="bar-val-1"></span>
+      </div>
+      <div class="wiz-tick" aria-hidden="true">
+        <svg viewBox="0 0 11 11" fill="none"><polyline points="2,6 4.5,9 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="wiz-step" id="bar-2" onclick="goStep(2)">
+      <span class="wiz-num">02</span>
+      <div class="wiz-info">
+        <span class="wiz-eyebrow">Étape 2</span>
+        <span class="wiz-label">Vos priorités</span>
+        <span class="wiz-value" id="bar-val-2"></span>
+      </div>
+      <div class="wiz-tick" aria-hidden="true">
+        <svg viewBox="0 0 11 11" fill="none"><polyline points="2,6 4.5,9 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="wiz-step" id="bar-3" onclick="goStep(3)">
+      <span class="wiz-num">03</span>
+      <div class="wiz-info">
+        <span class="wiz-eyebrow">Étape 3</span>
+        <span class="wiz-label">Vos outils IA</span>
+        <span class="wiz-value" id="bar-val-3"></span>
+      </div>
+      <div class="wiz-tick" aria-hidden="true">
+        <svg viewBox="0 0 11 11" fill="none"><polyline points="2,6 4.5,9 9,2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 1 : TYPE DE PRODUCTION ─────────────────── -->
+  <section class="wiz-section visible" id="sec-1" aria-label="Étape 1">
+    <div class="sec-head">
+      <h2>Quelle est votre type de production ?</h2>
+      <p>Sélectionnez le système qui correspond à votre exploitation.</p>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+    <div class="step-actions" style="margin-top:1.75rem;">
+      <button class="btn-main" id="btn-next-1" onclick="goStep(2)" disabled>
+        Suivant : mes priorités
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── STEP 2 : BESOINS ─────────────────────────────── -->
+  <section class="wiz-section" id="sec-2" aria-label="Étape 2">
+    <div class="sec-head">
+      <h2>Quelles sont vos priorités ?</h2>
+      <p>Cochez un ou plusieurs défis que vous souhaitez adresser avec l'IA. La sélection multiple est encouragée.</p>
+    </div>
+    <div class="needs-grid" id="needs-grid"></div>
+    <div class="step-actions">
+      <button class="btn-ghost" onclick="goStep(1)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M9 6H3M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Retour
+      </button>
+      <button class="btn-main" id="btn-next-2" onclick="showResults()" disabled>
+        Découvrir mes outils
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M8 4l3 3-3 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── STEP 3 : RÉSULTATS ────────────────────────────── -->
+  <section class="wiz-section" id="sec-3" aria-label="Étape 3 — Résultats">
+    <div class="results-bar">
+      <div class="results-meta" id="results-meta"></div>
+      <div class="results-count">
+        <span class="rc-num" id="rc-num">0</span>
+        <span class="rc-label">outils recommandés</span>
+      </div>
+    </div>
+    <div id="results-body"></div>
+    <div class="step-actions" style="margin-top:2rem;">
+      <button class="btn-ghost" onclick="goStep(2)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M9 6H3M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Modifier mes priorités
+      </button>
+      <button class="btn-ghost" onclick="goStep(1)">
+        Recommencer
+      </button>
+    </div>
+  </section>
+
+  </div><!-- /tab-wizard -->
+
+  <!-- TAB: S'INFORMER -->
+  <div id="tab-inform" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-inform">
+
+    <div class="inform-intro">
+      <h2>S'informer sur l'IA en agriculture</h2>
+      <p>Ressources sélectionnées par le groupe de travail IA d'Agridées pour approfondir vos connaissances, comprendre les enjeux et rester à jour sur les évolutions en cours.</p>
+    </div>
+
+    <div class="inform-group">
+      <h3 class="inform-group-title">Comprendre les bases</h3>
+      <p class="inform-group-intro">Des ressources pour se faire une culture générale de l’IA et du vocabulaire du secteur, avant de choisir des outils.</p>
+      <div class="inform-grid">
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.8" y="4.6" width="18.4" height="14.8" rx="2.4"/><path d="M10.2 9.4l4.8 2.6-4.8 2.6z" fill="currentColor" stroke="none"/></svg></span><span class="inform-eyebrow">Plateforme · Vidéos & Glossaire</span></div>
+        <div class="inform-name">IA des champs</div>
+        <p class="inform-desc">Un lexique vidéo et un glossaire spécialisés dans l'agriculture — pour comprendre les notions clés de l'IA agricole, des termes techniques aux cas d'usage terrain.</p>
+        <a class="inform-link" href="https://ia-des-champs.lovable.app/" target="_blank" rel="noopener">
+          ia-des-champs.lovable.app
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 5.2A1.8 1.8 0 0 1 6 3.4h13.2v14.4H6a1.8 1.8 0 0 0-1.8 1.8z"/><path d="M4.2 19.6a1.8 1.8 0 0 1 1.8-1.8h13.2v2.8H6a1.8 1.8 0 0 1-1.8-1"/><path d="M8.2 7.6h7M8.2 11h4.6"/></svg></span><span class="inform-eyebrow">Wiki · Outils numériques</span></div>
+        <div class="inform-name">Wiki Agri Tech — Aspexit</div>
+        <p class="inform-desc">« Trouvez les outils numériques adaptés à votre ferme » — un répertoire collaboratif et structuré des solutions agri-tech référencées par type de besoin.</p>
+        <a class="inform-link" href="https://www.aspexit.com" target="_blank" rel="noopener">
+          aspexit.com
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.6h7.4l4.6 4.6v12.2H6z"/><path d="M13.4 3.6v4.6H18"/><path d="M9 12.4h6M9 15.8h6M9 9h2.4"/></svg></span><span class="inform-eyebrow">Livre blanc · 2026</span></div>
+        <div class="inform-name">Livre blanc ACTA — IA générative en agriculture</div>
+        <p class="inform-desc">Co-signé par l'ACTA, l'Académie d'Agriculture de France et la Chaire AgroTIC : enjeux, principes et applications de l'IA générative pour les filières agricoles. Référence de fond pour comprendre les grandes orientations.</p>
+        <a class="inform-link" href="https://www.acta.asso.fr/livre-blanc-intelligence-artificielle-generative-en-agriculture/" target="_blank" rel="noopener">
+          Télécharger le livre blanc
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      </div>
+    </div><!-- /inform-group -->
+
+    <div class="inform-group">
+      <h3 class="inform-group-title">Se former, se faire accompagner et échanger</h3>
+      <p class="inform-group-intro">Organismes, programmes et réseaux qui proposent des formations, un accompagnement structuré ou des webinaires sur les usages de l’IA.</p>
+      <div class="inform-grid">
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 8.6L12 4.2l9.4 4.4L12 13z"/><path d="M6.4 10.8v4.8c0 1.6 2.5 2.9 5.6 2.9s5.6-1.3 5.6-2.9v-4.8"/><path d="M21.4 8.6v5"/></svg></span><span class="inform-eyebrow">Formation · Groupes professionnels</span></div>
+        <div class="inform-name">Hectar</div>
+        <p class="inform-desc">Formations opérationnelles sur l'IA agricole pour groupes d'agriculteurs et de conseillers — programmes courts, orientés pratique, adaptés aux réalités de terrain.</p>
+        <a class="inform-link" href="https://www.hectar.co/lp/livre-blanc-ia" target="_blank" rel="noopener">
+          Télécharger le livre blanc IA
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 8.6L12 4.2l9.4 4.4L12 13z"/><path d="M6.4 10.8v4.8c0 1.6 2.5 2.9 5.6 2.9s5.6-1.3 5.6-2.9v-4.8"/><path d="M21.4 8.6v5"/></svg></span><span class="inform-eyebrow">Formation · IA agricole</span></div>
+        <div class="inform-name">Agriviz</div>
+        <p class="inform-desc">Structure spécialisée dans la formation et l'accompagnement des agriculteurs et conseillers agricoles sur les outils numériques et l'intelligence artificielle. Programmes pratiques centrés sur les usages terrain.</p>
+        <a class="inform-link" href="https://www.agriviz.fr/" target="_blank" rel="noopener">
+          agriviz.fr
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8.8" cy="8.4" r="3"/><path d="M3.2 19.2a5.6 5.6 0 0 1 11.2 0"/><circle cx="17" cy="9.6" r="2.4"/><path d="M15 15.6a4.6 4.6 0 0 1 5.9 3.6"/></svg></span><span class="inform-eyebrow">Accompagnement · Accélération IA</span></div>
+        <div class="inform-name">BPIfrance — Accélérez IA</div>
+        <p class="inform-desc">Programme d'accompagnement et de sensibilisation à l'IA pour les TPE et PME, dont les exploitations agricoles. Diagnostics, webinaires et ressources pédagogiques en ligne.</p>
+        <a class="inform-link" href="https://conseil.bpifrance.fr/accelerez-ia" target="_blank" rel="noopener">
+          conseil.bpifrance.fr/accelerez-ia
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="18" r="2.4"/><circle cx="19" cy="18" r="2.4"/><path d="M10.6 7.2L6.4 15.8M13.4 7.2l4.2 8.6M7.4 18h9.2"/></svg></span><span class="inform-eyebrow">Réseau · Webinaires & Newsletters</span></div>
+        <div class="inform-name">RMT Naexus</div>
+        <p class="inform-desc">Réseau mixte technologique copiloté par ACTA, ARVALIS et les Chambres d'Agriculture France — plus de 40 partenaires. Webinaires réguliers, lettres d'information et retours d'expériences sur le numérique agricole.</p>
+        <a class="inform-link" href="https://naexus.fr/" target="_blank" rel="noopener">
+          naexus.fr
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      </div>
+    </div><!-- /inform-group -->
+
+    <div class="inform-group">
+      <h3 class="inform-group-title">Connaître le cadre : réglementation et sécurité</h3>
+      <p class="inform-group-intro">Ce que la loi impose et comment protéger les données de l’exploitation.</p>
+      <div class="inform-grid">
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.4v17.2M6.6 20.6h10.8"/><path d="M4 8.2l4.4-1.6M20 8.2l-4.4-1.6"/><path d="M1.8 13.4L4 8.2l2.2 5.2a2.2 2.2 0 0 1-4.4 0z"/><path d="M17.8 13.4L20 8.2l2.2 5.2a2.2 2.2 0 0 1-4.4 0z"/></svg></span><span class="inform-eyebrow">Réglementation · Cadre européen</span></div>
+        <div class="inform-name">IA Act — Règlement européen sur l'IA</div>
+        <p class="inform-desc">Premier cadre juridique mondial sur l'intelligence artificielle, entré en vigueur en août 2024. Classes les systèmes d'IA par niveau de risque et impose des obligations spécifiques aux développeurs et utilisateurs. À connaître pour un usage responsable des outils IA sur votre exploitation.</p>
+        <a class="inform-link" href="https://artificialintelligenceact.eu/fr/" target="_blank" rel="noopener">
+          artificialintelligenceact.eu
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l7.6 2.8v6.2c0 4.3-3.1 7.9-7.6 9.4-4.5-1.5-7.6-5.1-7.6-9.4V5.6z"/><path d="M8.8 11.9l2.2 2.3 4.2-4.4"/></svg></span><span class="inform-eyebrow">Cybersécurité · Diagnostic gratuit</span></div>
+        <div class="inform-name">ANSSI — MesServicesCyber</div>
+        <p class="inform-desc">Plateforme de l'Agence nationale de la sécurité des systèmes d'information : évaluez votre niveau de protection numérique avec un diagnostic cyber gratuit, et accédez à des ressources adaptées aux TPE et PME.</p>
+        <a class="inform-link" href="https://messervices.cyber.gouv.fr/" target="_blank" rel="noopener">
+          messervicescyber.gouv.fr
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <div class="inform-card">
+        <div class="inform-top"><span class="inform-ico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6.2" rx="7.6" ry="2.8"/><path d="M4.4 6.2v11.6c0 1.55 3.4 2.8 7.6 2.8s7.6-1.25 7.6-2.8V6.2"/><path d="M4.4 12c0 1.55 3.4 2.8 7.6 2.8s7.6-1.25 7.6-2.8"/></svg></span><span class="inform-eyebrow">Base de données · Phytosanitaires</span></div>
+        <div class="inform-name">AgriGuide</div>
+        <p class="inform-desc">Base européenne unique regroupant les données réglementaires de tous les produits phytosanitaires — 1 600 étiquettes en France, plus de 10 000 en Europe. On scanne le QR code du bidon pour obtenir l'étiquette numérique et les conditions d'emploi applicables à sa parcelle. Portée par CropLife Europe et, en France, par Phytéis. Déploiement en cours, obligation d'étiquette digitale en 2028.</p>
+        <a class="inform-link" href="https://www.agriguide.eu/france/fr/" target="_blank" rel="noopener">
+          agriguide.eu
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      </div>
+    </div><!-- /inform-group -->
+
+    <!-- POINTS DE VIGILANCE -->
+
+
+  </div><!-- /tab-inform -->
+
+  <!-- TAB: POINTS DE VIGILANCE -->
+  <div id="tab-vigilance" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-vigilance">
+
+    <div class="inform-intro vig-intro">
+      <h2><span class="vig-icon-wrap" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Avant de vous lancer</h2>
+      <p>Huit questions à vous poser avant d'adopter un outil IA sur votre exploitation. Elles valent pour toutes les solutions du guide, quelle que soit votre production.</p>
+    </div>
+
+    <div class="vig-section">
+      <ol class="vig-list">
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">1</span>
+          <div class="vig-body">
+            <span class="vig-label">Identifiez d'abord l'irritant métier</span>
+            <p class="vig-detail">La définition du rôle des IA doit être précisée dès le départ. Quel est le problème concret que vous voulez résoudre ? L'outil doit répondre à un vrai besoin terrain, pas être adopté pour son aspect innovant.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">2</span>
+          <div class="vig-body">
+            <span class="vig-label">Prenez le temps de paramétrer avec des données de qualité</span>
+            <p class="vig-detail">Après avoir défini l'irritant métier et l'outil correspondant, paramétrez-le soigneusement avec des données fiables. Principe à retenir : <em>Garbage in, garbage out</em> — la qualité des résultats dépend de la qualité des données fournies.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">3</span>
+          <div class="vig-body">
+            <span class="vig-label">Réservez les décisions stratégiques aux humains</span>
+            <p class="vig-detail">Confiez aux IA les tâches répétitives, analytiques et bien définies à l'avance. Les décisions majeures pour votre exploitation — investissements, orientation, transmission — restent de votre responsabilité.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">4</span>
+          <div class="vig-body">
+            <span class="vig-label">Privilégiez les IA auditables et explicables</span>
+            <p class="vig-detail">Préférez des solutions qui affichent les variables utilisées, les équations sous-jacentes et les données sources. Passer d'une IA opaque à une IA auditable vous permet de comprendre et de contester les recommandations.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">5</span>
+          <div class="vig-body">
+            <span class="vig-label">Vérifiez la sécurité et la localisation de vos données</span>
+            <p class="vig-detail">Assurez-vous que vos données d'exploitation sont hébergées en Europe, conformes au RGPD, et ne sont pas revendues à des tiers. Lisez les conditions générales et interrogez l'éditeur sur sa politique de données.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">6</span>
+          <div class="vig-body">
+            <span class="vig-label">Estimez le retour sur investissement avant de souscrire</span>
+            <p class="vig-detail">Calculez le coût total de possession : abonnement, installation, formation, maintenance. Évaluez les gains espérés — temps libéré, intrants économisés, rendement amélioré — et fixez-vous un horizon de retour réaliste.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">7</span>
+          <div class="vig-body">
+            <span class="vig-label">Choisissez des solutions souveraines et sobres énergétiquement</span>
+            <p class="vig-detail">Privilégiez des éditeurs avec un hébergement européen et un modèle économique pérenne. Interrogez-vous sur la consommation énergétique de l'outil — certaines solutions sont conçues pour être peu énergivores et respectueuses de l'environnement.</p>
+          </div>
+        </li>
+        <li class="vig-item">
+          <span class="vig-num" aria-hidden="true">8</span>
+          <div class="vig-body">
+            <span class="vig-label">Gardez un esprit critique face aux recommandations</span>
+            <p class="vig-detail">Les réponses, conclusions et recommandations des IA doivent toujours être questionnées, voire complétées par les humains. Votre expérience terrain reste le meilleur filtre pour évaluer la pertinence d'un conseil algorithmique.</p>
+          </div>
+        </li>
+      </ol>
+    </div><!-- /vig-section -->
+
+  </div><!-- /tab-vigilance -->
+
+  <!-- TAB: CLUB IAGRI -->
+  <div id="tab-club" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-club">
+    <div style="max-width:1000px;margin:0 auto;padding:2rem 1rem">
+
+      <!-- Hero -->
+      <div class="club-hero">
+        <span class="club-hero-eyebrow">Une initiative Agridées</span>
+        <h2>Club IAgri</h2>
+        <p class="club-hero-tagline">« À plusieurs, on va plus loin avec l’IA. »</p>
+        <p class="club-hero-desc">Club IAgri réunit des agricultrices et agriculteurs de toutes filières et de toutes régions pour progresser ensemble dans leurs usages de l’intelligence artificielle. Entre pairs, on partage ses retours d’expérience, ses astuces et ses assistants personnalisés, pour avancer plus vite et avec plus de confiance.</p>
+      </div>
+
+      <!-- Ce que l'on partage -->
+      <h3 style="font-family:var(--disp);font-weight:700;font-size:1rem;color:var(--ink);margin-bottom:1rem">Ce que l'on partage au Club</h3>
+      <div class="club-actions">
+
+        <div class="club-action-card">
+          <div class="club-action-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 5.5a1.5 1.5 0 0 1 1.5-1.5h7a1.5 1.5 0 0 1 1.5 1.5v4A1.5 1.5 0 0 1 11 11H6.5L4 13.2V11a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M15 7.5h1.5a1.5 1.5 0 0 1 1.5 1.5v4a1.5 1.5 0 0 1-1.5 1.5v2.2L14 14.5h-3"/></svg>
+          </div>
+          <div class="club-action-title">Retours d'expérience sur les outils</div>
+          <p class="club-action-desc">Logiciels et matériels IA utilisés sur l'exploitation, ce qui a fonctionné ou non, et avec quel paramétrage.</p>
+        </div>
+
+        <div class="club-action-card">
+          <div class="club-action-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="15" height="11" rx="1.8"/><path d="M6.5 17.5h7"/><path d="M10 14v3.5"/><path d="M6 7.5l1.8 1.8L6 11.1"/><path d="M10.5 11.1h3.5"/></svg>
+          </div>
+          <div class="club-action-title">Partage sur les assistants IA personnalisés</div>
+          <p class="club-action-desc">Assistants construits par les participants pour leur propre exploitation, prompts, méthode et bases de connaissances : par exemple un tableau de bord technico-économique monté avec un LLM généraliste (section IV.3 de la Note).</p>
+        </div>
+
+        <div class="club-action-card">
+          <div class="club-action-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 17.5 17.5"/><path d="M9 6.5v2.8l1.9 1.1"/></svg>
+          </div>
+          <div class="club-action-title">Veille en agriculture</div>
+          <p class="club-action-desc">Nouveautés, astuces et alertes sur les pièges à éviter : hallucinations des modèles, sécurité des données.</p>
+        </div>
+
+      </div><!-- /club-actions -->
+
+      <!-- Objectifs -->
+      <div class="club-objectives">
+        <h3>Pourquoi rejoindre le Club IAgri ?</h3>
+        <ul class="club-obj-list">
+          <li class="club-obj-item"><span class="club-obj-dot"></span>Lever les appréhensions face à l'IA en échangeant entre pairs, dans un cadre de confiance</li>
+          <li class="club-obj-item"><span class="club-obj-dot"></span>Se donner des idées les uns aux autres : à plusieurs, on est plus forts</li>
+          <li class="club-obj-item"><span class="club-obj-dot"></span>Progresser concrètement sur les IA génératives généralistes (LLM) : prompts, usages, bonnes pratiques</li>
+          <li class="club-obj-item"><span class="club-obj-dot"></span>Partager les retours d'expérience sur les outils IA spécialisés, logiciels comme matériels</li>
+          <li class="club-obj-item"><span class="club-obj-dot"></span>Faire émerger et diffuser les nouveautés et astuces du terrain</li>
+        </ul>
+      </div>
+
+      <!-- CTA -->
+      <div class="club-cta">
+        <div class="club-cta-text">
+          <strong>Rejoindre le Club IAgri</strong>
+          <a class="club-cta-mail" href="mailto:damave@agridees.com">damave@agridees.com</a>
+        </div>
+        <a class="club-cta-link" href="mailto:damave@agridees.com?subject=Club%20IAgri%20%E2%80%94%20demande%20d%27information&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20en%20savoir%20plus%20sur%20le%20Club%20IAgri.%0A%0ANom%20et%20pr%C3%A9nom%20%3A%0AExploitation%20et%20type%20de%20production%20%3A%0AD%C3%A9partement%20%3A%0A%0AMerci%20d%27avance%2C">
+          Nous contacter
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+        </a>
+      </div>
+      <!-- Visuel -->
+      <figure class="club-visual">
+        <svg viewBox="0 0 1200 380" role="img" aria-label="Illustration : des agricultrices et agriculteurs réunis au bord d'un champ, échangeant autour de leurs usages de l'IA">
+        <defs>
+        <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#DCEAFA"/><stop offset="1" stop-color="#F2F7FD"/>
+        </linearGradient>
+        <linearGradient id="champA" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#CFE2F6"/><stop offset="1" stop-color="#BBD6F0"/>
+        </linearGradient>
+        <linearGradient id="champB" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#AFCFEE"/><stop offset="1" stop-color="#93BEE6"/>
+        </linearGradient>
+        </defs>
+        <rect width="1200" height="380" fill="url(#ciel)"/>
+        <circle cx="985" cy="118" r="52" fill="#FFF" opacity=".62"/>
+        <circle cx="985" cy="118" r="34" fill="#FFF" opacity=".75"/>
+        <!-- horizon et champs -->
+        <path d="M0 246 C 220 226, 470 222, 720 232 C 930 240, 1080 250, 1200 244 L1200 380 L0 380 Z" fill="url(#champA)"/>
+        <path d="M0 292 C 260 272, 560 270, 840 282 C 1010 289, 1110 296, 1200 292 L1200 380 L0 380 Z" fill="url(#champB)"/>
+        <g stroke="#7FB0DF" stroke-width="1.5" fill="none" opacity=".55">
+        <path d="M0 268 C 250 250, 560 247, 860 258 C 1030 264, 1120 270, 1200 266"/>
+        <path d="M0 316 C 260 298, 580 296, 880 308 C 1040 314, 1130 320, 1200 316"/>
+        <path d="M0 348 C 280 330, 600 328, 900 340 C 1050 346, 1140 350, 1200 348"/>
+        </g>
+        <g fill="#6FA6DA" opacity=".5">
+        <circle cx="150" cy="262" r="3"/><circle cx="352" cy="255" r="3"/><circle cx="556" cy="253" r="3"/>
+        <circle cx="760" cy="258" r="3"/><circle cx="962" cy="264" r="3"/>
+        <circle cx="248" cy="310" r="2.6"/><circle cx="668" cy="305" r="2.6"/><circle cx="1058" cy="312" r="2.6"/>
+        </g>
+        <!-- bulles d echange -->
+        <g>
+        <g fill="#FFFFFF" stroke="#1D6FC4" stroke-width="2">
+        <path d="M318 78h132a10 10 0 0 1 10 10v40a10 10 0 0 1-10 10h-70l-20 18v-18h-42a10 10 0 0 1-10-10V88a10 10 0 0 1 10-10z"/>
+        </g>
+        <g fill="#1D6FC4" opacity=".28">
+        <rect x="336" y="96" width="96" height="7" rx="3.5"/>
+        <rect x="336" y="112" width="64" height="7" rx="3.5"/>
+        </g>
+        <g fill="#FFFFFF" stroke="#1D6FC4" stroke-width="2">
+        <path d="M556 46h150a10 10 0 0 1 10 10v44a10 10 0 0 1-10 10h-46l-22 20v-20h-82a10 10 0 0 1-10-10V56a10 10 0 0 1 10-10z"/>
+        </g>
+        <g fill="#1D6FC4" opacity=".28">
+        <rect x="574" y="64" width="112" height="7" rx="3.5"/>
+        <rect x="574" y="80" width="80" height="7" rx="3.5"/>
+        </g>
+        <!-- etincelle IA -->
+        <path d="M812 104l7 18 18 7-18 7-7 18-7-18-18-7 18-7z" fill="#1D6FC4" opacity=".55"/>
+        <path d="M852 142l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#D46B00" opacity=".55"/>
+        </g>
+        <!-- personnages -->
+        <g fill="#1D6FC4">
+        <circle cx="300" cy="212" r="19"/>
+        <path d="M272 300 C 272 254, 284 238, 300 238 C 316 238, 328 254, 328 300 Z"/>
+        </g>
+        <g fill="#155AA0">
+        <circle cx="392" cy="200" r="21"/>
+        <path d="M361 300 C 361 250, 374 224, 392 224 C 410 224, 423 250, 423 300 Z"/>
+        <rect x="416" y="246" width="34" height="24" rx="4" transform="rotate(-12 433 258)"/>
+        </g>
+        <g fill="#2A7EA4">
+        <circle cx="556" cy="204" r="20"/>
+        <path d="M526 300 C 526 250, 539 230, 556 230 C 573 230, 586 250, 586 300 Z"/>
+        </g>
+        <g fill="#1D6FC4">
+        <circle cx="644" cy="212" r="18"/>
+        <path d="M618 300 C 618 254, 629 238, 644 238 C 659 238, 670 254, 670 300 Z"/>
+        </g>
+        <g fill="#155AA0">
+        <circle cx="738" cy="218" r="17"/>
+        <path d="M714 302 C 714 258, 724 242, 738 242 C 752 242, 762 258, 762 302 Z"/>
+        </g>
+        </svg>
+        <figcaption class="club-visual-cap">Entre pairs, on partage ce qui marche — et ce qui ne marche pas.</figcaption>
+      </figure>
+
+
+    </div>
+  </div><!-- /tab-club -->
+
+  <footer class="site-footer">
+    <!-- Encart En savoir plus -->
+    <div class="footer-note-cta">
+      <div class="footer-note-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H7l-4 3V5a1 1 0 0 1 1-1z"/></svg>
+      </div>
+      <div class="footer-note-body">
+        <p class="footer-note-text">Si vous voulez en savoir plus sur l'IA en agriculture et ses applications concrètes pour les chefs d'exploitation, consultez notre note de think tank complète.</p>
+        <a class="footer-note-link" href="https://www.agridees.com/publications/intelligences-artificielles-bras-droits-des-agriculteurs/" target="_blank" rel="noopener">
+          Lire la note complète sur agridees.com
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 11 L11 2M6 2h5v5"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- À propos d'Agridées -->
+    <div class="footer-about">
+      <a class="footer-about-logo" href="https://www.agridees.com" target="_blank" rel="noopener" aria-label="Agridées — ouvrir agridees.com">
+        <svg style="height:28px;width:auto;display:block" viewBox="0 0 220.5 64.6" xmlns="http://www.w3.org/2000/svg" aria-label="Agridées">
+          <style>.flst{fill:#003686}</style>
+          <path d="M6.6 37.4c-.2 3.7 2.6 6.9 6.3 7.1h.7c9.1 0 9.1-14.2 0-14.2-3.7-.2-6.8 2.7-6.9 6.4-.1.2-.1.5-.1.7m14.1-11.7h5.6v23.4h-5.5l-.3-3.4c-1.3 2.8-5 4.1-7.6 4.1C6 49.9.8 45.6.8 37.4c0-8.1 5.4-12.3 12.2-12.2 3.1 0 6.1 1.5 7.5 3.8l.2-3.3zm15 11.1c0 4.1 2.8 6.5 6.1 6.5s6.1-2.5 6.1-6.5-2.8-6.6-6.1-6.6c-3.4 0-6.1 2.5-6.1 6.6m13.8-13.5l4.3 3.2-2.6 3.3c1.7 1.9 2.6 4.4 2.5 6.9 0 2.9-1.1 7-4.9 8.7 3.9 1.9 4.8 4.7 4.8 7.7 0 6.5-4.9 10.4-11.7 10.4S30 59.4 30 53.1h5.7c0 3 2.8 5 6.1 5s5.9-1.8 5.9-5-3-4.7-5.9-4.7c-7.3 0-11.9-4.5-11.9-11.8S35.3 25 41.8 25c1.9-.1 3.7.4 5.4 1.3l2.3-3zm13.2 2.4l.4 2.7c1.8-2.9 4.2-3.3 6.6-3.3 2.2 0 4.4.8 6 2.2l-2.6 5c-1.1-1-2.6-1.6-4.2-1.5-3 0-5.8 1.6-5.8 5.9V49h-5.8V25.7h5.4zm99.8-10.5h-6.8l-3.5 6.5v.3h5.1l5.2-6.5v-.3zm-13.2 19.5H162c-.4-3-2.8-4.6-6.1-4.6-3.1 0-5.7 1.5-6.6 4.6m18.2 4.8h-18.3c.4 2.9 2.9 5 7 5 2.1 0 4.9-.8 6.3-2.2l3.7 3.7c-2.5 2.6-6.5 3.8-10.1 3.8-8.1 0-12.9-5-12.9-12.5 0-7.1 4.8-12.2 12.4-12.2 7.9-.1 12.8 4.7 11.9 14.4m22.1-4.8c-.4-3-2.8-4.6-6.1-4.6-3.1 0-5.7 1.5-6.5 4.6h12.6zm-12.7 4.8c.4 2.9 2.9 5 7 5 2.1 0 4.9-.8 6.3-2.2l3.7 3.7c-2.5 2.6-6.5 3.8-10.1 3.8-8.1 0-12.9-5-12.9-12.5 0-7.1 4.8-12.2 12.4-12.2 7.8 0 12.7 4.8 11.8 14.5l-18.2-.1zm38-7.6c-1.6-1.5-3.7-2.2-5.8-2.1-2.8 0-4.3.9-4.3 2.3 0 1.5 1.4 2.4 4.4 2.6 4.4.3 10 1.3 10 7.5 0 4.1-3.4 7.7-10.1 7.7-3.7 0-7.4-.6-10.8-4.2l2.8-4.1c1.7 1.8 5.5 3.2 8.1 3.3 2.2 0 4.2-1.1 4.2-2.8 0-1.6-1.3-2.3-4.7-2.5-4.4-.3-9.7-1.9-9.7-7.3s5.6-7.3 9.9-7.3c3.7 0 6.4.7 9.1 3.1l-3.1 3.8z" fill="#757474"/>
+          <path d="M105.6 40.4h10c11 0 15.3-8 15.1-15.9-.2-7.5-4.7-15-15.2-15h-10v30.9zm34.1-15.8c.2 12.2-7.3 24.6-24.2 24.6h-19V.8h19c16.6 0 24 11.8 24.2 23.8" class="flst"/>
+          <path class="flst" d="M79.5 25.7h5.6v23.4h-5.6z"/>
+          <path class="flst" d="M79.5 15.4h5.6v8.6h-5.6z"/>
+        </svg>
+        <span class="footer-logo-date">depuis 1867</span>
+      </a>
+      <p class="footer-about-text">Agridées est un think tank agricole indépendant fondé en 1867. Son objectif : réfléchir, partager et avancer sur les grandes questions de l'agriculture française et européenne. Ses groupes de travail réunissent agriculteurs, chercheurs, filières et acteurs publics pour produire des analyses de référence et éclairer les décisions stratégiques du secteur.</p>
+    </div>
+
+    <!-- Source -->
+    <p class="footer-source">Source : Note Agridées « Intelligences artificielles, bras droits des agriculteurs ? » — Groupe de travail IA, oct. 2025 – sept. 2026. Les outils cités sont à titre illustratif et non exhaustif. Une validation terrain est recommandée avant tout déploiement.</p>
+  </footer>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   PICTOGRAMMES
+   Trois familles, toutes porteuses de sens :
+   - CAT_ICON  : la categorie de besoin (reprise a l identique
+                 de la carte "priorite" jusqu au titre de section,
+                 pour que l on retrouve son choix dans les resultats)
+   - TYPE_ICON : la famille technologique de l outil, pour qu on
+                 distingue au premier coup d oeil un robot d un
+                 chatbot ou d une camera
+   - RES_ICON  : la nature de la ressource dans "S informer"
+══════════════════════════════════════════════════════ */
+const SVG = (d) => '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+
+const CAT_ICON = {
+  /* Charge mentale : une pile de paperasse qui se regle toute seule */
+  cogn:  SVG('<path d="M5 4.5h9l5 5V19a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19z"/><path d="M14 4.5v5h5"/><path d="M8.6 14.6l1.9 1.9 4-4.2"/>'),
+  /* Aide a la decision : une cible, on vise juste et tot */
+  dec:   SVG('<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.6"/><path d="M12 1.6v2.6M12 19.8v2.6M22.4 12h-2.6M4.2 12H1.6"/>'),
+  /* Performance : un cadran, on regle finement */
+  eco:   SVG('<path d="M3.6 17.5a9.2 9.2 0 1 1 16.8 0"/><path d="M12 17.5l4.2-5.6"/><circle cx="12" cy="17.5" r="1.4" fill="currentColor" stroke="none"/><path d="M12 5.3v1.6M5.4 10.4l1.4.7M18.6 10.4l-1.4.7"/>'),
+  /* Strategie : une trajectoire qui monte vers un jalon */
+  strat: SVG('<path d="M3 20h18"/><path d="M4.5 16.2l4.6-4.8 3.5 2.7 5.8-6.6"/><path d="M14.4 7.5h4v4"/><circle cx="9.1" cy="11.4" r="1.5" fill="currentColor" stroke="none"/>'),
+  /* Assistant personnalise : des reglages et une etincelle */
+  assist: SVG('<path d="M4.5 7.5h8M17 7.5h2.5M4.5 16.5h3M12 16.5h7.5"/><circle cx="14.6" cy="7.5" r="2.2"/><circle cx="9.6" cy="16.5" r="2.2"/><path d="M19 2.2l.5 1.4 1.4.5-1.4.5-.5 1.4-.5-1.4-1.4-.5 1.4-.5z" fill="currentColor" stroke="none"/>'),
+  /* LLM generalistes : des etincelles, l outil a tout faire */
+  llm:   SVG('<path d="M11 3.6l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z"/><path d="M18 13.4l.85 2.25L21.1 16.5l-2.25.85L18 19.6l-.85-2.25L14.9 16.5l2.25-.85z"/>')
+};
+
+const TYPE_ICON = {
+  /* Conversation : on parle a l outil en langage courant */
+  conv:  SVG('<path d="M3.5 6.2A1.7 1.7 0 0 1 5.2 4.5h9.6a1.7 1.7 0 0 1 1.7 1.7v5.4a1.7 1.7 0 0 1-1.7 1.7H8.4L4.6 16v-2.7a1.7 1.7 0 0 1-1.1-1.7z"/><path d="M19 9.4h.3a1.7 1.7 0 0 1 1.7 1.7v4.7a1.7 1.7 0 0 1-1.4 1.7v2.4L16.4 17h-3.2"/>'),
+  /* Vision : une camera qui regarde la parcelle */
+  vision: SVG('<path d="M3.2 8.6A1.8 1.8 0 0 1 5 6.8h2.3l1.3-2h6.8l1.3 2H19a1.8 1.8 0 0 1 1.8 1.8v8.6A1.8 1.8 0 0 1 19 19H5a1.8 1.8 0 0 1-1.8-1.8z"/><circle cx="12" cy="12.6" r="3.5"/>'),
+  /* Prediction : une courbe qui anticipe */
+  predict: SVG('<path d="M3.5 19.5h17"/><path d="M4.5 15.4l4-4.4 3.3 2.6 4-5.4"/><path d="M15.8 8.2h3.7v3.7" stroke-dasharray="2.4 2"/><path d="M17.8 12.2l2.7 3.4" stroke-dasharray="2.4 2"/>'),
+  /* Robotique : une machine qui travaille au champ */
+  robot: SVG('<rect x="4.2" y="7.4" width="15.6" height="8.2" rx="2"/><path d="M12 4.2v3.2"/><circle cx="12" cy="3.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.6" cy="11.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.4" cy="11.5" r="1.1" fill="currentColor" stroke="none"/><path d="M7.4 15.6v2.6M16.6 15.6v2.6M5.6 19.4h4M14.4 19.4h4"/>'),
+  /* Capteurs : un objet connecte qui emet */
+  iot:   SVG('<circle cx="12" cy="13.8" r="2.3"/><path d="M8.6 10.4a4.8 4.8 0 0 1 6.8 0"/><path d="M6.2 8a8.2 8.2 0 0 1 11.6 0"/><path d="M12 16.1v4.3"/><path d="M9.4 20.4h5.2"/>'),
+  /* Simulation : on teste des scenarios en couches */
+  simul: SVG('<path d="M12 3.4l8.4 4.2-8.4 4.2-8.4-4.2z"/><path d="M3.6 12l8.4 4.2 8.4-4.2"/><path d="M3.6 16.4l8.4 4.2 8.4-4.2"/>'),
+  /* Cartographie : on spatialise ses donnees */
+  carto: SVG('<path d="M3.4 6.4l5.8-2.2v13.4l-5.8 2.2z"/><path d="M9.2 4.2l5.6 2.2v13.4l-5.6-2.2z"/><path d="M14.8 6.4l5.8-2.2v13.4l-5.8 2.2z"/>'),
+  /* Base de donnees : la source de reference */
+  data:  SVG('<ellipse cx="12" cy="6.2" rx="7.6" ry="2.8"/><path d="M4.4 6.2v11.6c0 1.55 3.4 2.8 7.6 2.8s7.6-1.25 7.6-2.8V6.2"/><path d="M4.4 12c0 1.55 3.4 2.8 7.6 2.8s7.6-1.25 7.6-2.8"/>'),
+  /* Plateforme : un tableau de bord ou tout est agrege */
+  board: SVG('<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2"/><path d="M3.4 9.2h17.2"/><path d="M9 9.2v10.4"/><path d="M12.2 12.4h5.4M12.2 15.8h3.4"/>')
+};
+
+/* Le libelle de type de chaque outil determine sa famille.
+   L ordre compte : on teste du plus specifique au plus general. */
+function typeFamily(label) {
+  const t = (label || '').toLowerCase();
+  if (/cartograph|sig/.test(t))                                   return 'carto';
+  if (/base de donn|reglementaire|réglementaire/.test(t))     return 'data';
+  if (/jumeau|jumeaux|simulation/.test(t))                        return 'simul';
+  if (/iot|pièges connect|piege/.test(t))                    return 'iot';
+  if (/vision|perceptive|caméra/.test(t))                    return 'vision';
+  if (/robot|pulvérisation|épandage|précision/.test(t)) return 'robot';
+  if (/prédict|prescript|oad|décisionnel|analytique|descriptive|œnolog/.test(t)) return 'predict';
+  if (/plateforme|application mobile/.test(t))                    return 'board';
+  return 'conv';
+}
+function typeIcon(label) { return TYPE_ICON[typeFamily(label)]; }
+
+/* Nature des ressources de l onglet "S informer" */
+const RES_ICON = {
+  video:  SVG('<rect x="2.8" y="4.6" width="18.4" height="14.8" rx="2.4"/><path d="M10.2 9.4l4.8 2.6-4.8 2.6z" fill="currentColor" stroke="none"/>'),
+  wiki:   SVG('<path d="M4.2 5.2A1.8 1.8 0 0 1 6 3.4h13.2v14.4H6a1.8 1.8 0 0 0-1.8 1.8z"/><path d="M4.2 19.6a1.8 1.8 0 0 1 1.8-1.8h13.2v2.8H6a1.8 1.8 0 0 1-1.8-1"/><path d="M8.2 7.6h7M8.2 11h4.6"/>'),
+  doc:    SVG('<path d="M6 3.6h7.4l4.6 4.6v12.2H6z"/><path d="M13.4 3.6v4.6H18"/><path d="M9 12.4h6M9 15.8h6M9 9h2.4"/>'),
+  audio:  SVG('<rect x="9.2" y="2.8" width="5.6" height="10.4" rx="2.8"/><path d="M5.6 11.4a6.4 6.4 0 0 0 12.8 0"/><path d="M12 17.8v3.4M9 21.2h6"/>'),
+  school: SVG('<path d="M2.6 8.6L12 4.2l9.4 4.4L12 13z"/><path d="M6.4 10.8v4.8c0 1.6 2.5 2.9 5.6 2.9s5.6-1.3 5.6-2.9v-4.8"/><path d="M21.4 8.6v5"/>'),
+  people: SVG('<circle cx="8.8" cy="8.4" r="3"/><path d="M3.2 19.2a5.6 5.6 0 0 1 11.2 0"/><circle cx="17" cy="9.6" r="2.4"/><path d="M15 15.6a4.6 4.6 0 0 1 5.9 3.6"/>'),
+  network:SVG('<circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="18" r="2.4"/><circle cx="19" cy="18" r="2.4"/><path d="M10.6 7.2L6.4 15.8M13.4 7.2l4.2 8.6M7.4 18h9.2"/>'),
+  event:  SVG('<rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2"/><path d="M8 3.4v3.6M16 3.4v3.6M3.4 10.4h17.2"/><circle cx="9" cy="14.4" r="1.1" fill="currentColor" stroke="none"/><circle cx="14" cy="14.4" r="1.1" fill="currentColor" stroke="none"/>'),
+  shield: SVG('<path d="M12 2.8l7.6 2.8v6.2c0 4.3-3.1 7.9-7.6 9.4-4.5-1.5-7.6-5.1-7.6-9.4V5.6z"/><path d="M8.8 11.9l2.2 2.3 4.2-4.4"/>'),
+  law:    SVG('<path d="M12 3.4v17.2M6.6 20.6h10.8"/><path d="M4 8.2l4.4-1.6M20 8.2l-4.4-1.6"/><path d="M1.8 13.4L4 8.2l2.2 5.2a2.2 2.2 0 0 1-4.4 0z"/><path d="M17.8 13.4L20 8.2l2.2 5.2a2.2 2.2 0 0 1-4.4 0z"/>')
+};
+
+/* ══════════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════════ */
+
+const productions = [
+  {
+    id: 'transversal',
+    name: 'Toutes productions',
+    sub: 'Outils génériques tous secteurs',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20v-7l7-4 7 4v7"/><path d="M10 20v-4h4v4"/><path d="M12 9V4"/><path d="M12 4c1.8 0 3-1 3-2.2-1.8 0-3 1-3 2.2z"/></svg>`
+  },
+  {
+    id: 'grandes-cultures',
+    name: 'Grandes cultures',
+    sub: 'Céréales, oléagineux, protéagineux, betterave',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7"/><path d="M12 8c0-2 1.4-3.6 3.4-3.9C15.4 6.1 14 7.7 12 8z"/><path d="M12 8C12 6 10.6 4.4 8.6 4.1 8.6 6.1 10 7.7 12 8z"/><path d="M12 13c0-2 1.4-3.6 3.4-3.9 0 2-1.4 3.6-3.4 3.9z"/><path d="M12 13c0-2-1.4-3.6-3.4-3.9 0 2 1.4 3.6 3.4 3.9z"/><path d="M12 4.2c0-1.3.7-2.3 2-2.7.3 1.4-.5 2.6-2 2.7z"/></svg>`
+  },
+  {
+    id: 'viticulture',
+    name: 'Viticulture',
+    sub: 'Vignes, vins, appellations',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-4"/><path d="M12 6V3"/><path d="M12 3c1.6 0 2.8-.9 3.2-2.2C13.6.9 12.4 1.7 12 3z"/><circle cx="8.6" cy="8.2" r="2.1"/><circle cx="15.4" cy="8.2" r="2.1"/><circle cx="12" cy="11.9" r="2.1"/><circle cx="8.6" cy="15.6" r="2.1"/><circle cx="15.4" cy="15.6" r="2.1"/></svg>`
+  },
+  {
+    id: 'elevage-laitier',
+    name: 'Élevage laitier',
+    sub: 'Bovins lait, vaches, génisses, veaux',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 7.4C4.5 6.6 3.6 5.1 3.8 3.4c1.7-.2 3.3.6 4.2 2.1"/><path d="M17.8 7.4c1.7-.8 2.6-2.3 2.4-4-1.7-.2-3.3.6-4.2 2.1"/><path d="M7.4 5.9h9.2c1 1.6 1.4 3.5 1 5.3-.4 1.9-2 3.2-3.9 3.2H10.3c-1.9 0-3.5-1.3-3.9-3.2-.4-1.8 0-3.7 1-5.3z"/><path d="M9.6 14.4c0 1.6 1.1 2.7 2.4 2.7s2.4-1.1 2.4-2.7"/><circle cx="9.7" cy="9.6" r="1" fill="currentColor" stroke="none"/><circle cx="14.3" cy="9.6" r="1" fill="currentColor" stroke="none"/><path d="M8.3 17.6V21"/><path d="M15.7 17.6V21"/></svg>`
+  },
+  {
+    id: 'maraichage',
+    name: 'Maraîchage',
+    sub: 'Légumes, plein champ et sous abri',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16c0 4.4-3.6 8-8 8s-8-3.6-8-8z"/><path d="M12 12V7"/><path d="M12 7c0-2.2 1.8-4 4-4 0 2.2-1.8 4-4 4z"/><path d="M12 8.4C11.4 6.7 9.7 5.6 8 5.9c.2 1.8 1.7 3.2 3.5 3.3"/></svg>`
+  },
+  {
+    id: 'arboriculture',
+    name: 'Arboriculture',
+    sub: 'Fruits, vergers, pommes, poires, noyaux',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-6"/><path d="M8 21h8"/><path d="M12 15c-3.9 0-7-2.7-7-6s3.1-6 7-6 7 2.7 7 6-3.1 6-7 6z"/><circle cx="9.2" cy="8.2" r="1" fill="currentColor" stroke="none"/><circle cx="14.6" cy="7.4" r="1" fill="currentColor" stroke="none"/><circle cx="12.4" cy="11.4" r="1" fill="currentColor" stroke="none"/></svg>`
+  },
+  {
+    id: 'elevage-porcin',
+    name: 'Élevage porcin & avicole',
+    sub: 'Porcs, poulets de chair, truies, veaux',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 7.9 4.2 5.1l3.1.9"/><path d="M18.4 7.9l1.4-2.8-3.1.9"/><path d="M6.6 7.3h10.8c1.3 1.5 1.9 3.5 1.6 5.4-.4 2.2-2.3 3.8-4.5 3.8H9.5c-2.2 0-4.1-1.6-4.5-3.8-.3-1.9.3-3.9 1.6-5.4z"/><ellipse cx="12" cy="13.4" rx="2.6" ry="1.9"/><circle cx="11" cy="13.4" r=".65" fill="currentColor" stroke="none"/><circle cx="13" cy="13.4" r=".65" fill="currentColor" stroke="none"/><circle cx="9" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".9" fill="currentColor" stroke="none"/><path d="M8.6 16.5V20"/><path d="M15.4 16.5V20"/></svg>`
+  },
+];
+
+const needs = [
+  {
+    id: 'cognitive',
+    cat: 'cogn',
+    label: 'Alléger la charge administrative',
+    desc: 'Automatiser la comptabilité, les comptes rendus, la traçabilité réglementaire et la gestion documentaire pour libérer du temps utile.',
+    badgeLabel: 'Charge mentale'
+  },
+  {
+    id: 'decisionnelle',
+    cat: 'dec',
+    label: 'Anticiper et mieux décider',
+    desc: 'Détecter précocement les maladies, surveiller les cultures et les animaux, estimer les rendements avant récolte.',
+    badgeLabel: 'Aide à la décision'
+  },
+  {
+    id: 'economique',
+    cat: 'eco',
+    label: 'Optimiser les intrants et la production',
+    desc: 'Agriculture de précision : réduire les phytosanitaires, piloter l\'irrigation et la fertilisation, automatiser avec la robotique.',
+    badgeLabel: 'Performance'
+  },
+  {
+    id: 'strategique',
+    cat: 'strat',
+    label: 'Piloter la stratégie d\'entreprise',
+    desc: 'Simuler des scénarios de diversification, couvrir le risque marché, modéliser les marges et préparer la transmission.',
+    badgeLabel: 'Stratégie'
+  },
+  {
+    id: 'assistant',
+    cat: 'assist',
+    label: 'Créer votre assistant IA personnalisé',
+    desc: 'Configurer un LLM généraliste avec vos propres données, prompts et bases de connaissances pour un assistant adapté à votre exploitation.',
+    badgeLabel: 'Assistant IA'
+  },
+];
+
+const catMeta = {
+  cogn:  { label: 'Charge mentale & organisation', badge: 'b-cogn',  strip: '--cogn',  tagcls: 't-cogn',  secCls: 'cs-cogn' },
+  dec:   { label: 'Aide à la décision',            badge: 'b-dec',   strip: '--dec',   tagcls: 't-dec',   secCls: 'cs-dec' },
+  eco:   { label: 'Performance & précision',        badge: 'b-eco',   strip: '--eco',   tagcls: 't-eco',   secCls: 'cs-eco' },
+  strat: { label: 'Stratégie d\'entreprise',        badge: 'b-strat', strip: '--strat', tagcls: 't-strat', secCls: 'cs-strat' },
+  assist:{ label: 'Assistant IA personnalisé',       badge: 'b-assist', strip: '--assist', tagcls: 't-assist', secCls: 'cs-assist' },
+};
+
+const prodLabels = {
+  'transversal':      'Toutes productions',
+  'grandes-cultures': 'Grandes cultures',
+  'viticulture':      'Viticulture',
+  'elevage-laitier':  'Élevage laitier',
+  'maraichage':       'Maraîchage',
+  'arboriculture':    'Arboriculture',
+  'elevage-porcin':   'Élevage porcin & avicole',
+};
+
+/* ── TOOLS DATABASE ─────────────────────────────────── */
+const tools = [
+  /* ─ COGNITIVE / transversal ─ */
+  { name:'Amicompta', company:'Isagri', type:'IA générative', desc:'Automatisation de la saisie comptable et des justificatifs. Connecté aux données d\'exploitation.', cats:['cognitive'], prods:['transversal'] },
+  { name:'Pennylane', company:'Pennylane', type:'IA générative', desc:'Comptabilité automatisée, reconnaissance et saisie des factures, gestion financière en temps réel.', cats:['cognitive'], prods:['transversal'] },
+  { name:'Meta IA', company:'Meta', type:'IA générative', desc:'Assistant IA généraliste de Meta, intégré à WhatsApp, Instagram et Messenger. Accessible directement depuis les applications mobiles du quotidien, sans compte supplémentaire à créer.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'Shiroo', company:'Shiroo', type:'IA vocale & process', desc:'Transmission de l\'information à l\'oral et création de fiches process par la voix. Idéal pour capitaliser les pratiques de l\'exploitation sans saisie manuelle : enregistrement d\'observations terrain, rédaction automatique de fiches d\'intervention.', cats:['cognitive'], prods:['transversal'] },
+  { name:'Ogis', company:'Ogis', type:'Cartographie / SIG', desc:'Logiciel de cartes et de fonds de cartes pour l\'exploitation agricole. Visualisation des parcelles, des données terrain et des analyses spatiales de manière intuitive. Conçu pour les agriculteurs souhaitant spatialiser leurs données sans formation SIG.', cats:['decisionnelle','economique'], prods:['transversal'] },
+  { name:'X-Field', company:'X-Field', type:'Création de contenus IA', desc:'Création d\'images et de vidéos par IA pour la communication de l\'exploitation agricole. Génération de visuels professionnels (réseaux sociaux, présentations, affiches) sans compétences graphiques.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'ChatGPT', company:'OpenAI', type:'IA générative', desc:'Recherche documentaire, rédaction de comptes rendus, synthèses, aide à la décision. Outil polyvalent, utilisable avec des prompts personnalisés adaptés à votre exploitation.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'Gemini', company:'Google', type:'IA générative', desc:'Assistant IA généraliste de Google, intégrable dans Google Workspace (Docs, Sheets, Gmail). Utile pour la synthèse documentaire, la rédaction et l\'analyse de données.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'Claude', company:'Anthropic', type:'IA générative', desc:'Assistant IA généraliste connu pour sa rigueur et ses réponses nuancées. Recommandé pour l\'analyse de documents techniques, la rédaction et les raisonnements complexes. Claude Cowork permet de créer des espaces de travail partagés avec ses propres données et processus, et notamment de construire ses propres assistants et outils de pilotage de l\'exploitation.', llm:true, cats:['cognitive','assistant'], prods:['transversal'] },
+  { name:'Mistral AI', company:'Mistral AI', type:'IA générative souveraine', desc:'LLM généraliste français — solution souveraine européenne hébergée en France. Recommandé pour les organisations souhaitant un hébergement des données en Europe avec conformité RGPD native.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'Microsoft Copilot', company:'Microsoft', type:'IA générative intégrée', desc:'Intégré aux outils Microsoft 365 : rédaction, synthèse de réunions, analyses de données dans Excel, comptes rendus automatiques. Propose également des assistants pré-configurés sur Copilot Studio, personnalisables selon les besoins métier.', llm:true, cats:['cognitive','assistant'], prods:['transversal'] },
+  { name:'NotebookLM', company:'Google', type:'IA générative', desc:'Capitalisation et interrogation de bases documentaires de l\'exploitation. Idéal pour structurer le savoir technique et faciliter la transmission.', llm:true, cats:['cognitive'], prods:['transversal'] },
+  { name:'LexAgro', company:'La France Agricole / La Revue Fiduciaire', type:'IA spécialisée', desc:'Assistant IA entraîné sur une base de données juridique, fiscale et réglementaire agricole française. Réduit le risque de non-conformité.', cats:['cognitive'], prods:['transversal'] },
+  { name:'XFarm Agent', company:'XFarm', type:'IA agentique', desc:'Facilitation des tâches administratives : gestion automatisée des registres d\'activité et du carnet de campagne numérique (field notebook).', cats:['cognitive'], prods:['transversal'] },
+  { name:'ChatCoop', company:'La Coopération Agricole', type:'Plateforme d\'assistants souverains', desc:'Bibliothèque d\'assistants IA : rédaction, synthèse, analyse et assistants-métier spécialisés. Hébergement souverain OVH, moteur Mistral AI. Conformité RGPD et AI Act.', note:'Réservé aux coopératives et à leurs conseillers.', cats:['cognitive'], prods:['transversal'] },
+  { name:'TerraGrow', company:'TerraGrow', type:'IA analytique', desc:'Pilotage technico-économique et comptable, calcul des marges, suivi de performance de l\'exploitation.', cats:['cognitive','strategique'], prods:['transversal'] },
+
+  /* ─ COGNITIVE / grandes-cultures ─ */
+  { name:'SmagBot', company:'Smag', type:'IA spécialisée', desc:'Facilite la traçabilité réglementaire, enregistrement des interventions par la voix et l\'écrit. Aide au choix de traitement phytosanitaire et calcul des doses de semis. Conçu pour les techniciens de coopérative.', cats:['cognitive','decisionnelle'], prods:['grandes-cultures'] },
+  { name:'TellIA', company:'TellIA', type:'IA spécialisée', desc:'Saisie automatisée des cahiers de culture à partir d\'échanges vocaux. Réduit considérablement le temps de saisie en fin de journée.', cats:['cognitive'], prods:['grandes-cultures'] },
+  { name:'ShayoFae', company:'ShayoFae', type:'IA spécialisée', desc:'Share Your Farming Experience — transcription speech-to-text, enregistrement automatisé des pratiques culturales, analyse agronomique, benchmark et aide au choix variétal. Spécialisé betterave et grandes cultures.', cats:['cognitive','decisionnelle'], prods:['grandes-cultures'] },
+  { name:'Sfeir × Hectar', company:'Sfeir / Hectar', type:'IA spécialisée', desc:'Créé par Hectar — assistant IA agricole compatible avec Raise : valorisation du savoir expert en speech-to-text, restitution structurée, historisation de la connaissance agronomique. Conçu pour les techniciens conseil et vétérinaires.', cats:['cognitive'], prods:['grandes-cultures','elevage-laitier'] },
+
+  /* ─ COGNITIVE / viticulture ─ */
+  { name:'Champagne Connect', company:'Filière Champagne', type:'Chatbot filière', desc:'Chatbot spécialisé pour répondre aux questions techniques de la filière viticole, décharger les conseillers des questions récurrentes et saisonnières.', cats:['cognitive'], prods:['viticulture'] },
+  { name:'OenoPilot', company:'OenoPilot', type:'IA spécialisée', desc:'Traçabilité et valorisation des produits viticoles, mémoire des vins, passeports numériques pour les appellations.', cats:['cognitive','decisionnelle'], prods:['viticulture'] },
+
+  /* ─ COGNITIVE / élevage laitier ─ */
+  { name:'CoVet', company:'CoVet', type:'Scribe IA spécialisé', desc:'Enregistre le dialogue vétérinaire-éleveur lors des visites et génère des comptes rendus de qualité avec recommandations (calendrier vaccinal). Allège la charge mentale et libère du temps pour la relation humain-humain.', cats:['cognitive'], prods:['elevage-laitier'] },
+  { name:'Lely Horizon', company:'Lely', type:'Plateforme de pilotage', desc:'Agrège les données d\'élevage (caméras, robots de traite) pour générer indicateurs, alertes et recommandations. Facilite la transmission de l\'exploitation et la délégation.', cats:['cognitive','decisionnelle','strategique'], prods:['elevage-laitier'] },
+  { name:'CalfGPT', company:'Förster-Technik', type:'IA agentique spécialisée', desc:'Agent conversationnel connecté aux données collectées pour le suivi individualisé des veaux laitiers, alertes en temps réel et recommandations d\'éleveur.', cats:['cognitive','decisionnelle'], prods:['elevage-laitier'] },
+
+  /* ─ DÉCISIONNELLE / viticulture ─ */
+  { name:'VineMapper', company:'ATOL CD', type:'Vision par ordinateur', desc:'Détection précoce des maladies de la vigne par analyse d\'images embarquées, alertes automatiques et priorisation des interventions dans le vignoble. IA embarquée dans le tracteur.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'Chouette Vision', company:'Agreenculture', type:'Vision par ordinateur', desc:'Caméra embarquée + algorithmes IA pour détecter des anomalies multifactorielles, déclencher des alertes précoces et réduire les traitements. Intégré dans les kits de robotisation Agreenculture.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'Flav\'Tech', company:'Vinipôle Sud Bourgogne / Chambre d\'Agriculture 71', type:'IA perceptive spécialisée', desc:'Capteur embarqué pour la détection rapide de la flavescence dorée, avec adaptation aux conditions locales bourguignonnes.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'Movida Grapevision', company:'Bayer', type:'IA prédictive', desc:'Modèles prédictifs du risque oïdium sur vigne. Recommande les fenêtres d\'intervention optimales pour réduire les traitements.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'Viewer', company:'EdenCore', type:'Vision par ordinateur', desc:'Caméra embarquée pour l\'estimation précoce des rendements, la pulvérisation de précision, la cartographie de vigueur et la détection de maladies. Testé dans le cadre d\'AgriFoodTEF.', cats:['decisionnelle','economique'], prods:['viticulture','arboriculture'] },
+  { name:'M&Wine / IAssemblage', company:'M&Wine', type:'IA œnologique', desc:'IA spécialisée pour optimiser les assemblages et améliorer la qualité des vins. Analyse les profils aromatiques et propose des assemblages sur mesure.', cats:['decisionnelle'], prods:['viticulture'] },
+
+  /* ─ DÉCISIONNELLE / grandes-cultures ─ */
+  { name:'Berleyes', company:'Terres Inovia', type:'Vision par ordinateur', desc:'Détection automatisée des altises sur colza par analyse d\'images. Permet d\'adapter les décisions de traitement en temps réel.', cats:['decisionnelle'], prods:['grandes-cultures'] },
+  { name:'Pl@ntNet', company:'INRAE / CIRAD', type:'IA perceptive open source', desc:'Application de reconnaissance des adventices et plantes par photo. Fiable, gratuite et développée par la recherche publique française.', cats:['decisionnelle'], prods:['grandes-cultures','maraichage','viticulture'] },
+  { name:'Pocket Lab', company:'Inarix (offre Ceresia)', type:'Vision par ordinateur', desc:'Application mobile pour l\'évaluation rapide et précise de la qualité des céréales récoltées : taux de protéines, pureté variétale, poids spécifique. Accélère l\'allotement à la récolte. Partenariat avec Vivescia.', cats:['decisionnelle'], prods:['grandes-cultures'] },
+  { name:'Javelot', company:'Javelot', type:'IA prédictive IoT', desc:'Réseau de capteurs connectés (température, humidité, CO2, mouvement, stock) pour la surveillance des silos. Détection des rongeurs et intrusions, alertes et recommandations automatiques.', cats:['decisionnelle'], prods:['grandes-cultures'] },
+  { name:'Bayer Prediview', company:'Bayer', type:'IA prédictive', desc:'Offre par hectare de blé garanti sans maladies majeures grâce à la prédiction des risques sanitaires et à la disponibilité des fongicides adaptés.', cats:['decisionnelle','economique'], prods:['grandes-cultures'] },
+
+  /* ─ DÉCISIONNELLE / élevage laitier ─ */
+  { name:'Lely Zeta + AiHerd', company:'Lely / AiHerd', type:'Vision par ordinateur', desc:'Monitoring comportemental des animaux par caméras sans collier ni capteur porté. Détection précoce des troubles sanitaires, chaleurs et anomalies de comportement dans les bâtiments.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'DeepBlue', company:'DeLaval', type:'IA prédictive', desc:'Prédiction des maladies chez les bovins laitiers, intégrée aux robots de traite DeLaval pour un monitoring continu de la santé du troupeau.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'Peek\'Ture', company:'Copeeks', type:'IA perceptive', desc:'Monitoring des bovins au pâturage par caméra grand angle. Suivi de la consommation d\'eau et détection d\'anomalies comportementales à distance.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'Calf Monitoring', company:'Futuro Farming', type:'IA prédictive IoT', desc:'Capteur infrarouge pour l\'évaluation des risques de maladies des veaux et la génération d\'alertes précoces. Réduit la mortalité et le recours aux antibiotiques.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'Dairy YoungStock / SenseHub', company:'SenseHub', type:'IA prédictive IoT', desc:'Boucle connectée pour le monitoring des veaux et génisses de 0 à 1 an : activité, buvée, prise de colostrum, rumination. Alertes et localisation en temps réel.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'OptiCow', company:'Hölscher + Leuschner', type:'IA descriptive', desc:'Identification par puces RFID, estimation du poids des vaches laitières et suivi de la mobilisation des réserves graisseuses pendant la lactation.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+  { name:'Ovacyte', company:'Indical Bioscience GmbH', type:'Vision par ordinateur', desc:'Analyse parasitologique automatisée pour compter et identifier les œufs de parasites dans les échantillons fécaux. Réduit le recours aux antiparasitaires.', cats:['decisionnelle'], prods:['elevage-laitier'] },
+
+  /* ─ DÉCISIONNELLE / élevage porcin ─ */
+  { name:'Pig\'Scan', company:'Unissia / IFIP', type:'Vision par ordinateur', desc:'Système automatisé d\'analyse des carcasses porcines en abattoir pour objectiver le suivi du bien-être animal et les indicateurs sanitaires exploitables par la filière.', cats:['decisionnelle'], prods:['elevage-porcin'] },
+  { name:'Galleon', company:'Cargill Provimi', type:'IA prescriptive spécialisée', desc:'Évaluation des risques de maladies à partir de l\'analyse du microbiote intestinal des volailles, génération de recommandations nutritionnelles personnalisées.', cats:['decisionnelle','economique'], prods:['elevage-porcin'] },
+
+  /* ─ ÉCONOMIQUE / grandes-cultures ─ */
+  { name:'Cropwise® Spray Assist + Protector + Qualicible', company:'Syngenta', type:'Agriculture de précision', desc:'Suite complète d\'aide à la pulvérisation : amélioration de la qualité d\'application, pilotage de la protection fongicide, ciblage herbicide ultra-localisé en conformité réglementaire.', cats:['economique'], prods:['grandes-cultures','viticulture'] },
+  { name:'Carbon Bee / BBLeap', company:'AgCoopilot', type:'Agriculture de précision', desc:'Caméras hyperspectrales et IA embarquée, coupure buse à buse pour réduction des intrants phytosanitaires. Distribuées par AgCoopilot.', cats:['economique'], prods:['grandes-cultures','viticulture'] },
+  { name:'Hydrokit Weeder Pilot', company:'Hydrokit', type:'Agriculture de précision', desc:'Une caméra fixée sur la bineuse repère les rangs de culture et corrige automatiquement la position de l\'outil pendant le passage. Résultat : on désherbe mécaniquement plus près du rang, plus vite et dès les premiers stades, sans abîmer la culture. S\'installe sur du matériel déjà en place.', cats:['economique'], prods:['grandes-cultures'] },
+  { name:'YieldsApp', company:'AgCoopilot', type:'IA prescriptive', desc:'Logiciel de modélisation des besoins en irrigation, fertilisation et protection des cultures. Génère des recommandations agronomiques personnalisées et améliore la résilience climatique.', cats:['economique'], prods:['grandes-cultures','arboriculture','maraichage'] },
+  { name:'Weenat', company:'Weenat', type:'IA prescriptive IoT', desc:'Réseau de capteurs connectés et plateforme IA pour le pilotage précis de l\'irrigation. Adapte les apports en eau aux conditions pédoclimatiques locales en temps réel.', cats:['economique'], prods:['grandes-cultures','maraichage','viticulture'] },
+  { name:'Ecorobotix', company:'Ecorobotix', type:'Robotique intelligente', desc:'Robot de pulvérisation de précision par reconnaissance d\'images des mauvaises herbes. Réduit les herbicides jusqu\'à 95 % grâce au traitement ultra-localisé.', cats:['economique'], prods:['grandes-cultures','viticulture','maraichage'] },
+  { name:'Cyclair', company:'Cyclair', type:'Robotique intelligente', desc:'Robot de désherbage mécanique automatisé adapté aux vignes, maraîchage et grandes cultures. Réduit la pénibilité et les intrants chimiques.', cats:['economique'], prods:['grandes-cultures','viticulture','maraichage'] },
+  { name:'Naïo Technologies', company:'Naïo Technologies', type:'Robotique intelligente', desc:'Robots autonomes de désherbage mécanique pour maraîchage, viticulture et grandes cultures. Leader français de la robotique agricole.', cats:['economique'], prods:['grandes-cultures','viticulture','maraichage'] },
+  { name:'Agreenculture', company:'Agreenculture', type:'Robotique intelligente', desc:'Kits de robotisation pour agro-équipementiers (Kuhn, Kubota). Tracteurs autonomes et semi-autonomes intégrant vision par ordinateur.', cats:['economique'], prods:['grandes-cultures','viticulture'] },
+  { name:'John Deere See & Spray + tracteur 8R', company:'John Deere', type:'Agriculture de précision', desc:'Désherbage ciblé par vision par ordinateur, guidage automatique et tracteur 8R autonome. Optimisation des flottes et réglage des moissonneuses en temps réel.', cats:['economique'], prods:['grandes-cultures'] },
+  { name:'Claas Cemos', company:'Claas', type:'Agriculture de précision', desc:'Système Cemos pour le réglage automatique du matériel (réglages en temps réel selon conditions météo, sol et culture). Optimise les performances de la moissonneuse et des tracteurs Claas en continu.', cats:['economique'], prods:['grandes-cultures'] },
+  { name:'Amazone (Easymatch, Autospread WindControl)', company:'Amazone', type:'Agriculture de précision', desc:'Épandeurs d\'engrais de précision avec contrôle du vent pour une application parfaitement maîtrisée et sans dérive.', cats:['economique'], prods:['grandes-cultures'] },
+
+  /* ─ ÉCONOMIQUE / élevage laitier ─ */
+  { name:'Lely A5 Next + Vector + Discovery', company:'Lely', type:'Robotique intelligente', desc:'Robot de traite A5 Next, robot d\'alimentation Vector, robot de nettoyage Discovery. Collecte et historisation des données de traite pour le monitoring de la santé du troupeau.', cats:['economique'], prods:['elevage-laitier'] },
+  { name:'MycoConnect', company:'Cargill Provimi', type:'IA prescriptive spécialisée', desc:'Optimisation de la ration selon les taux de mycotoxines détectés dans les aliments. Réduit les pertes économiques liées aux contaminations.', cats:['economique'], prods:['elevage-laitier','elevage-porcin'] },
+
+  /* ─ ÉCONOMIQUE / élevage porcin ─ */
+  { name:'Materneo 4.0 Asserva', company:'Materneo', type:'Agriculture de précision élevage', desc:'Système d\'alimentation de précision pour les truies en maternité. Adapte la ration individuelle en temps réel selon les performances et besoins de chaque animal.', cats:['economique'], prods:['elevage-porcin'] },
+
+  /* ─ ÉCONOMIQUE / maraîchage ─ */
+  { name:'Alliance Syngenta × Heritable', company:'Syngenta / Heritable', type:'IA prescriptive', desc:'Recommandation variétale hyperlocale (précision au 10 m²) basée sur des données pédoclimatiques et historiques locales. Déjà commercialisé à l\'international.', cats:['economique','decisionnelle'], prods:['maraichage','viticulture'] },
+
+  /* ─ STRATÉGIQUE ─ */
+  { name:'Finres', company:'Finres', type:'Jumeaux numériques / simulation', desc:'Pilotage de la marge, performance économique, simulation (jumeaux numériques), stress-tests climatiques, diagnostic de vulnérabilité. Modèles validés statistiquement et agronomiquement avec audit externe. Référence pour la construction d\'une stratégie robuste.', cats:['strategique','economique'], prods:['grandes-cultures','elevage-laitier'] },
+  { name:'FarmLeap', company:'FarmLeap', type:'IA prédictive / simulation', desc:'Optimisation économique, anticipation des revenus, stress tests économiques et prospective. Modélise différents scénarios de développement de l\'exploitation.', cats:['strategique','economique'], prods:['grandes-cultures'] },
+  { name:'Piloter sa Ferme', company:'Piloter sa Ferme', type:'IA décisionnelle marchés', desc:'Optimisation des décisions de vente et des marges, stratégie commerciale et prévision des retournements de marché céréaliers.', cats:['strategique','economique'], prods:['grandes-cultures'] },
+  { name:'Assolia', company:'Assolia', type:'Simulation agronomique', desc:'Planification des assolements et optimisation des rotations culturales. Aide à concevoir des itinéraires techniques cohérents sur plusieurs années.', cats:['strategique'], prods:['grandes-cultures'] },
+  { name:'Itinera', company:'Neayi', type:'Simulation / transition agroécologique', desc:'Plateforme collaborative de modélisation et simulation de scénarios de transition. Évalue les performances techniques, économiques et environnementales de différents itinéraires. Outil de dialogue avec le conseiller.', cats:['strategique'], prods:['grandes-cultures'] },
+  { name:'Quideos', company:'Quideos', type:'IA marchés / couverture risque', desc:'Analyse des prix, veille sur les dynamiques de marchés, OAD d\'achat/vente/stocks. Permet de souscrire à des produits de couverture pour sécuriser jusqu\'à 85 % des marges opérationnelles.', cats:['strategique'], prods:['grandes-cultures','arboriculture'] },
+
+  /* ─ NOUVEAUX OUTILS — annexes note sept. 2026 ─ */
+  { name:'Cockpit Agriculture', company:'Cockpit Agriculture', type:'Jumeaux numériques / simulation', desc:'Plateforme de jumeaux numériques pour l\'exploitation agricole : modélisation et simulation de scénarios technico-économiques, pilotage de la performance et aide à la décision stratégique.', cats:['strategique','economique'], prods:['transversal'] },
+  { name:'TwinFarms', company:'PEPR AgroEcoNum', type:'Jumeaux numériques / simulation', desc:'Plateforme de simulation par jumeaux numériques de l\'exploitation agricole. Modélise les systèmes de culture et d\'élevage pour tester des scénarios de transition agroécologique, évaluer les impacts environnementaux et économiques avant de prendre des décisions stratégiques. <em>Actuellement en phase de test.</em>', cats:['strategique','economique'], prods:['transversal'] },
+  { name:'Osiris Agriculture', company:'Osiris', type:'Robotique intelligente / IoT', desc:'Robot autonome d\'irrigation de précision. Pilotage automatisé des apports en eau selon les données terrain en temps réel et les besoins réels des cultures, pour réduire les consommations d\'eau.', cats:['economique'], prods:['grandes-cultures','maraichage'] },
+  { name:'Xarvio Field Manager', company:'BASF Digital Farming', type:'Agriculture de précision', desc:'Plateforme de pilotage des cultures : recommandations variétales, modèles de risques sanitaires (maladies, ravageurs), optimisation des rendements et conseil en protection phytosanitaire.', cats:['economique','decisionnelle'], prods:['grandes-cultures'] },
+  { name:'FieldView', company:'Climate FieldView (Bayer)', type:'Agriculture de précision', desc:'Collecte et analyse des données parcellaires en temps réel : cartographies de rendement, suivi des pratiques, optimisation des intrants et aide à la décision à la parcelle.', cats:['economique','decisionnelle'], prods:['grandes-cultures'] },
+  { name:'Downs Trieur Optique', company:'Downs', type:'Vision par ordinateur', desc:'Trieur optique par vision par ordinateur pour la sélection et le calibrage des pommes de terre : élimination automatique des défauts (pourriture, verdissement, forme), tri par qualité et amélioration du taux de valorisation de la récolte.', cats:['economique'], prods:['grandes-cultures','maraichage'] },
+
+  /* ─ COMPLÉMENT ANNEXES — GT IA oct. 2025 – sept. 2026 ─ */
+  { name:'Gamma', company:'Gamma', type:'IA générative', desc:'Génération automatique de présentations et de supports visuels à partir de données textuelles ou structurées. Utile pour préparer une réunion de coopérative, une présentation banque ou un support de formation sans passer des heures sur la mise en forme.', cats:['cognitive'], prods:['transversal'] },
+  { name:'Chatbot Bayer', company:'Bayer', type:'Assistant phytosanitaire', desc:'Assistance technique 24h/24 sur les produits phytosanitaires : lecture automatique des conditions d\'emploi (ZNT, DVP, dose), prédiction du risque sanitaire et vérification de conformité réglementaire. Intègre les bases de données phytosanitaires européennes.', cats:['cognitive','decisionnelle'], prods:['transversal'] },
+
+  { name:'VineCore', company:'ATOL CD', type:'Plateforme SaaS d\'analyse', desc:'Cartographie des anomalies sanitaires du vignoble et pilotage des stratégies de traitement intraparcellaire. Reçoit les résultats de VineMapper en temps réel et prédit les risques à la parcelle.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'VineSpot', company:'ATOL CD', type:'Application mobile', desc:'Application terrain complémentaire de VineCore pour la maîtrise du risque sanitaire viticole en mobilité : consultation des cartes d\'anomalies et saisie d\'observations directement dans les rangs.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'CapTrap Vision Delta', company:'Cap2020', type:'Pièges connectés IA', desc:'Pièges connectés (~700 €/an) avec traitement d\'images pour l\'identification automatique de la cicadelle de la flavescence dorée, du cochylis et de l\'eudémis. Photo quotidienne automatisée et alertes en temps réel.', cats:['decisionnelle'], prods:['viticulture'] },
+  { name:'Trapview', company:'Syngenta / EFOS', type:'Pièges connectés IA', desc:'Pièges intelligents couplés à une IA de reconnaissance entomologique. Affine les fenêtres d\'intervention phytosanitaire et optimise les stratégies de biocontrôle.', cats:['decisionnelle'], prods:['grandes-cultures','arboriculture','maraichage'] },
+  { name:'Mileos', company:'Arvalis / réseau Acta', type:'OAD prédictif', desc:'Outil d\'aide à la décision de prévision du risque de maladies fongiques (mildiou notamment) : modèle épidémiologique couplé à des données météo géolocalisées. Parmi les outils les plus cités par les prescripteurs (enquête Phytéis 2024).', cats:['decisionnelle','economique'], prods:['grandes-cultures','maraichage'] },
+  { name:'Downs CropVision', company:'Downs', type:'Vision par ordinateur', desc:'Tri automatique, calibration et traçabilité des productions à fort débit : analyse de 18 images par seconde, jusqu\'à 100 t/h. Décisions autonomes sur critères complexes, en substitution à l\'équivalent de dix postes de tri manuel.', cats:['decisionnelle','economique'], prods:['maraichage','arboriculture'] },
+  { name:'Chatbot Syngenta NLP', company:'Syngenta', type:'Assistant agronomique vocal', desc:'Diagnostic de maladies et conseils de traitement en langage naturel, y compris à l\'oral. Base de connaissances agronomiques multilingue. Déployé initialement en Inde (2 M d\'utilisateurs en 2025), transposable via RAG spécialisé.', cats:['decisionnelle','cognitive'], prods:['transversal'] },
+
+  { name:'Bakus', company:'Vitibot', type:'Robotique intelligente', desc:'Robot autonome électrique pour les travaux du sol dans le vignoble (désherbage intercep). IA de navigation et de détection d\'obstacles. Répond à la pénurie de main-d\'œuvre et supprime le recours aux herbicides sur le rang.', cats:['economique'], prods:['viticulture'] },
+  { name:'Wall-Ye', company:'MYCE_Vigne', type:'Robotique intelligente', desc:'Robot viticole autonome français (25 kg, panneaux solaires, ~25 k€) : taille et entretien robotisés par reconnaissance de formes et de couleurs.', cats:['economique'], prods:['viticulture'] },
+  { name:'Vitirover', company:'Vitirover', type:'Robotique intelligente', desc:'Robot tondeur autonome solaire pour l\'entretien de l\'enherbement, déployé en flotte dans les vignobles. IA de navigation et supervision de flotte. Réduit fortement le recours aux herbicides.', cats:['economique'], prods:['viticulture','arboriculture'] },
+  { name:'Agrifac', company:'Agrifac (via AgCoopilot)', type:'Pulvérisation de précision', desc:'Pulvérisateurs grande capacité intégrables dans des itinéraires de pulvérisation ultra-localisée avec IA embarquée de détection des adventices.', cats:['economique'], prods:['grandes-cultures'] },
+  { name:'Kverneland', company:'Kverneland (via AgCoopilot)', type:'Pulvérisation & épandage', desc:'Épandeurs et pulvérisateurs couplables à des systèmes IA de localisation et de modulation intraparcellaire des apports.', cats:['economique'], prods:['grandes-cultures'] },
+];
+
+/* ══════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════ */
+let selProd = null;
+let selNeeds = new Set();
+let curStep = 1;
+
+/* ══════════════════════════════════════════════════════
+   RENDER PRODUCTION GRID
+══════════════════════════════════════════════════════ */
+function renderProductions() {
+  const grid = document.getElementById('prod-grid');
+  grid.innerHTML = productions.map(p => `
+    <button class="prod-card${selProd === p.id ? ' sel' : ''}"
+      onclick="selectProd('${p.id}')"
+      aria-pressed="${selProd === p.id}"
+      aria-label="${p.name}">
+      <div class="prod-icon">
+        ${p.icon.replace('currentColor', selProd === p.id ? '#fff' : 'var(--brand)')}
+      </div>
+      <div class="prod-name">${p.name}</div>
+    </button>
+  `).join('');
+}
+
+function selectProd(id) {
+  selProd = id;
+  renderProductions();
+  document.getElementById('btn-next-1').disabled = false;
+  document.getElementById('bar-val-1').textContent = prodLabels[id] || '';
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER NEEDS GRID
+══════════════════════════════════════════════════════ */
+function renderNeeds() {
+  const grid = document.getElementById('needs-grid');
+  grid.innerHTML = needs.map(n => {
+    const isSel = selNeeds.has(n.id);
+    return `
+      <button class="need-card cat-${n.cat}${isSel ? ' sel' : ''}"
+        onclick="toggleNeed('${n.id}')"
+        aria-pressed="${isSel}"
+        aria-label="${n.label}">
+        <div class="need-head">
+          <span class="need-ico">${CAT_ICON[n.cat]}</span>
+          <span class="cat-badge b-${n.cat}">${n.badgeLabel}</span>
+        </div>
+        <div class="need-name">${n.label}</div>
+        <div class="need-desc">${n.desc}</div>
+        <div class="need-radio"></div>
+      </button>
+    `;
+  }).join('');
+}
+
+function toggleNeed(id) {
+  if (selNeeds.has(id)) selNeeds.delete(id);
+  else selNeeds.add(id);
+  renderNeeds();
+  document.getElementById('btn-next-2').disabled = selNeeds.size === 0;
+  document.getElementById('bar-val-2').textContent =
+    selNeeds.size > 0 ? `${selNeeds.size} priorité${selNeeds.size > 1 ? 's' : ''}` : '';
+}
+
+/* ══════════════════════════════════════════════════════
+   SHOW RESULTS
+══════════════════════════════════════════════════════ */
+function showResults() {
+  // filter tools
+  const activeNeeds = [...selNeeds];
+  const filtered = tools.filter(t => {
+    const prodOk = selProd === 'transversal' || t.prods.includes('transversal') || t.prods.includes(selProd);
+    const needOk = t.cats.some(c => activeNeeds.includes(c));
+    return prodOk && needOk;
+  });
+
+  // update bar
+  document.getElementById('rc-num').textContent = filtered.length;
+  document.getElementById('bar-val-3').textContent = `${filtered.length} outils`;
+
+  // summary
+  const meta = document.getElementById('results-meta');
+  meta.innerHTML = `
+    <div class="rm-prod">
+      <span class="rm-prod-ico">${(productions.find(p => p.id === selProd) || {}).icon || ''}</span>
+      <span class="rm-item">
+        <span class="rm-label">Type d'exploitation</span>
+        <span class="rm-value">${prodLabels[selProd]}</span>
+      </span>
+    </div>
+    <div class="rm-item">
+      <span class="rm-label">Priorités sélectionnées</span>
+      <span class="rm-value">${activeNeeds.map(n => needs.find(x=>x.id===n)?.badgeLabel).join(' · ')}</span>
+    </div>
+  `;
+
+  // group by category (in display order)
+  const ORDER = ['cognitive','decisionnelle','economique','strategique','assistant'];
+  const CAT_KEYS = { cognitive:'cogn', decisionnelle:'dec', economique:'eco', strategique:'strat', assistant:'assist' };
+
+  const body = document.getElementById('results-body');
+
+  if (filtered.length === 0) {
+    body.innerHTML = `
+      <div class="no-results">
+        <h3>Aucun outil trouvé</h3>
+        <p>Essayez d'élargir vos priorités ou de sélectionner "Toutes productions".</p>
+      </div>`;
+  } else {
+    let html = '';
+    const activeOrderedNeeds = ORDER.filter(n => activeNeeds.includes(n));
+
+
+    const parNom = (a, b) => a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true });
+    // Les LLM generalistes sont normalement regroupes en fin de liste. Mais si
+    // la priorite "Creer votre assistant IA" est selectionnee, ce bloc ferait
+    // doublon : on le supprime et les LLM restent dans leurs categories.
+    const groupLLM = !activeNeeds.includes('assistant');
+
+    activeOrderedNeeds.forEach(needId => {
+      const catKey = CAT_KEYS[needId];
+      const cm = catMeta[catKey];
+      const group = filtered
+        .filter(t => t.cats.includes(needId) && (!groupLLM || needId === 'assistant' || !t.llm))
+        .sort(parNom);
+      if (!group.length) return;
+
+      html += `<div class="cat-section ${cm.secCls}">
+        <div class="cat-header">
+          <span class="cat-ico">${CAT_ICON[catKey]}</span>
+          <h3>${cm.label}</h3>
+          <span class="cat-ct">${group.length} outil${group.length>1?'s':''}</span>
+        </div>
+        <div class="tools-grid">
+          ${group.map(t => toolCard(t, cm)).join('')}
+        </div>
+      </div>`;
+    });
+
+    // Bloc final : les LLM generalistes, utiles quelle que soit la priorite.
+    const llmGroup = groupLLM ? filtered.filter(t => t.llm).sort(parNom) : [];
+    if (llmGroup.length) {
+      html += `<div class="cat-section cs-llm">
+        <div class="cat-header">
+          <span class="cat-ico">${CAT_ICON.llm}</span>
+          <h3>LLM g\u00e9n\u00e9ralistes</h3>
+          <span class="cat-ct">${llmGroup.length} outil${llmGroup.length>1?'s':''}</span>
+        </div>
+        <p class="cat-intro">Ces assistants g\u00e9n\u00e9ralistes ne sont sp\u00e9cifiques \u00e0 aucune production ni \u00e0 aucun besoin&nbsp;: ils servent \u00e0 peu pr\u00e8s partout, d\u00e8s lors qu\'on prend le temps de bien formuler sa demande.</p>
+        <div class="tools-grid">
+          ${llmGroup.map(t => toolCard(t, catMeta.cogn)).join('')}
+        </div>
+      </div>`;
+    }
+
+    body.innerHTML = html;
+  }
+
+  goStep(3);
+}
+
+/* URL lookup — site officiel si connu, sinon recherche Google */
+const toolLink = (t) => {
+  const known = {
+    /* ── Articles ─────────────────────────────────────── */
+    'Sfeir × Hectar':  { url: 'https://www.sfeir.dev/ia/hectar-x-sfeir-un-assistant-ia-agri-compatible-avec-raise/', label: "Lire l'article" },
+    'Berleyes':        { url: 'https://www.terresinovia.fr/fr/actualites/berleyes-lia-au-secours-du-comptage-de-larves-daltises', label: "Lire l'article" },
+    'VineMapper':      { url: 'https://www.atolcd.com/actualite/atol-cd-reprend-vinemapper-un-outil-de-detection-des-maladies-de-la-vigne', label: "Lire l'article" },
+    "Flav'Tech":       { url: 'https://www.vinipole-sud-bourgogne.fr/centre-de-ressources/agriculture-de-precision/flav-tech-c-est-parti-pour-trois-ans-133.html', label: "Lire l'article" },
+    /* ── Application mobile ───────────────────────────── */
+    'Bayer Prediview': { url: 'https://play.google.com/store/apps/details?id=com.bayer.cs.predimaapp&hl=fr', label: "Télécharger l'app" },
+    /* ── Sites ────────────────────────────────────────── */
+    'Meta IA':         { url: 'https://www.meta.ai/' },
+    'Gamma':                  { url: 'https://gamma.app/' },
+    'Chatbot Bayer':          { url: 'https://www.bayer-agri.fr/' },
+    'VineCore':               { url: 'https://www.atolcd.com/' },
+    'VineSpot':               { url: 'https://www.atolcd.com/' },
+    'CapTrap Vision Delta':   { url: 'https://www.cap2020.fr/' },
+    'Trapview':               { url: 'https://www.trapview.com/' },
+    'Mileos':                 { url: 'https://www.arvalis.fr/outils-et-services/mileos' },
+    'Downs CropVision':       { url: 'https://www.downsgroup.com/' },
+    'Chatbot Syngenta NLP':   { url: 'https://www.syngenta.fr/' },
+    'Bakus':                  { url: 'https://vitibot.fr/' },
+    'Wall-Ye':                { url: 'https://www.wall-ye.com/' },
+    'Vitirover':              { url: 'https://www.vitirover.fr/' },
+    'Agrifac':                { url: 'https://www.agrifac.com/' },
+    'Kverneland':             { url: 'https://fr.kvernelandgroup.com/' },
+    'Shiroo':           { url: 'https://shiroo.ai/' },
+    'Ogis':             { url: 'https://www.ogis.fr/' },
+    'X-Field':          { url: 'https://www.x-field.io/' },
+    'Amicompta':       { url: 'https://www.isagri.fr/logiciels/amicompta' },
+    'Pennylane':       { url: 'https://www.pennylane.com' },
+    'ChatGPT':         { url: 'https://chatgpt.com' },
+    'Gemini':          { url: 'https://gemini.google.com' },
+    'Claude':          { url: 'https://claude.ai' },
+    'Mistral AI':      { url: 'https://chat.mistral.ai' },
+    'Microsoft Copilot': { url: 'https://copilot.microsoft.com' },
+    'NotebookLM':      { url: 'https://notebooklm.google' },
+    'LexAgro':         { url: 'https://www.lexagro.fr/' },
+    'XFarm Agent':     { url: 'https://www.xfarm.ag/fr/xfarm-agent' },
+    'ChatCoop':        { url: 'https://www.solutionsplus.coop/intelligence-artificielle/' },
+    'TerraGrow':       { url: 'https://terragrow.fr/ia/workflows-cabinet/' },
+    'ShayoFae':        { url: 'https://www.shayofae.com/' },
+    'SmagBot':         { url: 'https://www.smag-group.com/' },
+    'TellIA':          { url: 'https://tellia.com/fr/' },
+    'Champagne Connect': { url: 'https://www.champagne.fr' },
+    'OenoPilot':       { url: 'https://www.oenopilot.fr' },
+    'CoVet':           { url: 'https://co.vet/fr/' },
+    'Lely Horizon':    { url: 'https://www.lely.com/fr/' },
+    'CalfGPT':         { url: 'https://www.foerster-technik.fr/' },
+    'Chouette Vision': { url: 'https://www.chouette.vision/' },
+    'Movida Grapevision': { url: 'https://agro.bayer.fr/cultures-et-catalogue-produits/outils/movida-grape-vision' },
+    'Viewer':          { url: 'https://edencore.ai/' },
+    'M&Wine / IAssemblage': { url: 'https://www.mandwine.com' },
+    'Pl@ntNet':        { url: 'https://plantnet.org' },
+    'Pocket Lab':      { url: 'https://www.inarix.com' },
+    'Javelot':         { url: 'https://www.javelot-agriculture.com/' },
+    'Lely Zeta + AiHerd': { url: 'https://www.lely.com/be/fr/a-propos-de-lely/nouvelles/lely-zeta---le-debut-d-un-nouveau-chapitre-dans-l-elevage-laitier/', label: "Lire l'article" },
+    'DeepBlue':        { url: 'https://www.delaval.com' },
+    "Peek'Ture":       { url: 'https://www.copeeks.com' },
+    'Calf Monitoring': { url: 'https://www.youtube.com/watch?v=nbRN5kgaYM0', label: 'Voir la vidéo' },
+    'Dairy YoungStock / SenseHub': { url: 'https://www.msd-sante-animale.fr/hub/sensehub/?imgtcs=true' },
+    'OptiCow':         { url: 'https://hl-agrar.de/fr/' },
+    'Ovacyte':         { url: 'https://shop.indical.com/en/instruments-and-plastics/ovacyte-pet-faecal-analyser-eu.html?redirected=1' },
+    'Cropwise® Spray Assist + Protector + Qualicible': { url: 'https://www.cropwise.com' },
+    'Carbon Bee / BBLeap': { url: 'https://www.agcoopilot.com' },
+    'Hydrokit Weeder Pilot': { url: 'https://www.hydrokit.com/agriculture/solutions-pour-outils-de-travail-du-sol/weeder-pilot-xrp24201.html' },
+    'YieldsApp':       { url: 'https://www.agcoopilot.com' },
+    'Weenat':          { url: 'https://weenat.com' },
+    'Ecorobotix':      { url: 'https://ecorobotix.com' },
+    'Cyclair':         { url: 'https://www.cyclair.fr' },
+    'Naïo Technologies': { url: 'https://www.naio-technologies.com' },
+    'Agreenculture':   { url: 'https://www.agreenculture.fr/fr' },
+    'John Deere See & Spray + tracteur 8R': { url: 'https://www.deere.fr' },
+    'Claas Cemos':     { url: 'https://www.claas.com/fr-fr/solutions-numeriques/pilotage-de-la-machine-cemos' },
+    'Amazone (Easymatch, Autospread WindControl)': { url: 'https://amazone.net/fr' },
+    'Lely A5 Next + Vector + Discovery': { url: 'https://www.lely.com/fr/solutions-pour-l-elevage/robots-de-traite/' },
+    'MycoConnect':     { url: 'https://www.cargill.fr' },
+    'Materneo 4.0 Asserva': { url: 'https://www.asserva.com/elevage/porcs-materneo/' },
+    'Alliance Syngenta × Heritable': { url: 'https://www.syngenta.fr' },
+    "Pig'Scan":        { url: 'https://www.pigscan.fr/' },
+    'Galleon':         { url: 'https://www.cargill.fr' },
+    'Finres':          { url: 'https://www.finres.org/fr' },
+    'FarmLeap':        { url: 'https://www.farmleap.com' },
+    'Piloter sa Ferme': { url: 'https://www.pilotersaferme.com/' },
+    'Assolia':         { url: 'https://www.assolia.com/' },
+    'Itinera':         { url: 'https://www.neayi.com' },
+    'Quideos':         { url: 'https://quideos.com/' },
+    'Cockpit Agriculture': { url: 'https://www.cockpit-agriculture.com/' },
+    'TwinFarms': { url: 'https://www.pepr-agroeconum.fr/content/download/667/9863?version=3', label: 'Lire la présentation' },
+    'Osiris Agriculture': { url: 'https://www.osiris-agriculture.fr/' },
+    'Xarvio Field Manager': { url: 'https://www.xarvio.com' },
+    'FieldView':       { url: 'https://climate.com' },
+    'Downs Trieur Optique': { url: 'https://www.downs.fr/' },
+  };
+  const entry = known[t.name];
+  if (entry) return { url: entry.url, label: entry.label || 'Visiter le site' };
+  const q = encodeURIComponent(t.name + ' ' + t.company + ' site officiel');
+  return { url: `https://www.google.com/search?q=${q}`, label: 'Visiter le site' };
+};
+
+function toolCard(t, cm) {
+  const prodTags = t.prods
+    .filter(p => p !== 'transversal')
+    .map(p => `<span class="tc-tag t-prod">${prodLabels[p] || p}</span>`)
+    .join('');
+  const catTags = t.cats
+    .map(c => {
+      const k = {cognitive:'cogn',decisionnelle:'dec',economique:'eco',strategique:'strat',assistant:'assist'}[c];
+      const lab = catMeta[k]?.label || c;
+      return `<span class="tc-tag ${catMeta[k]?.tagcls}">${lab}</span>`;
+    }).join('');
+
+  const { url, label } = toolLink(t);
+
+  return `
+    <article class="tool-card">
+      <div class="tc-top">
+        <div class="tc-names">
+          <div class="tc-name">${t.name}</div>
+          <div class="tc-company">${t.company}</div>
+        </div>
+        <span class="tc-type">${typeIcon(t.type)}${t.type}</span>
+      </div>
+      <p class="tc-desc">${t.desc}</p>
+      <div class="tc-tags">
+        ${t.prods.includes('transversal') ? '<span class="tc-tag t-prod">Toutes productions</span>' : prodTags}
+        ${catTags}
+      </div>
+      ${t.note ? `<div class="tc-note"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.5"/><line x1="6.5" y1="4.5" x2="6.5" y2="4.6"/><line x1="6.5" y1="6.5" x2="6.5" y2="9"/></svg>${t.note}</div>` : ''}
+      <a class="tc-link" href="${url}" target="_blank" rel="noopener">
+        ${label}
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M5.5 1.5h4v4"/></svg>
+      </a>
+    </article>
+  `;
+}
+
+/* ══════════════════════════════════════════════════════
+   STEP NAV
+══════════════════════════════════════════════════════ */
+function goStep(n) {
+  if (n === 2 && !selProd) return;
+  if (n === 3 && selNeeds.size === 0) return;
+
+  curStep = n;
+
+  // sections
+  [1,2,3].forEach(i => {
+    document.getElementById(`sec-${i}`).classList.toggle('visible', i===n);
+  });
+
+  // bar steps
+  [1,2,3].forEach(i => {
+    const el = document.getElementById(`bar-${i}`);
+    el.classList.remove('active','done');
+    if (i === n) el.classList.add('active');
+    else if (i < n) el.classList.add('done');
+  });
+
+  // scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════════════
+   TAB NAVIGATION
+══════════════════════════════════════════════════════ */
+function switchTab(tabId) {
+  ['wizard','vigilance','inform','club'].forEach(id => {
+    document.getElementById(`tab-${id}`).classList.toggle('visible', id === tabId);
+    const btn = document.getElementById(`tab-btn-${id}`);
+    btn.classList.toggle('active', id === tabId);
+    btn.setAttribute('aria-selected', id === tabId ? 'true' : 'false');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+document.getElementById('total-count').textContent = tools.length + '+';
+renderProductions();
+renderNeeds();
+</script>
+
+</body></html>
